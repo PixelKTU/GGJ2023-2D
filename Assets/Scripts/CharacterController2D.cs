@@ -42,7 +42,7 @@ public class CharacterController2D : MonoBehaviour
                 }
             }
         }
-        //atsakingas uz player 1 valdyma
+        //atsakingas uz pasokima
             if (Input.GetKey(leftKey) && Mathf.Abs(rb.velocity.x) < maxSpeed)
             {
 
@@ -53,10 +53,11 @@ public class CharacterController2D : MonoBehaviour
 
                 rb.AddForce(new Vector2(700, 0) * Time.deltaTime);
             }
-            if(Input.GetKey(jumpKey)&&isGrounded==true)
+            if(Input.GetKeyDown(jumpKey)&&isGrounded==true)
             {
-                rb.AddForce(new Vector2(0, jumpStrength) * Time.deltaTime);
+            rb.velocity = Vector2.up * jumpStrength;
             }
         
     }
+
 }
