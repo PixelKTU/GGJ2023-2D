@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class CharacterController2D : MonoBehaviour
 {
-    public bool Player2;
+    [SerializeField] KeyCode leftKey;
+    [SerializeField] KeyCode rightKey;
+    [SerializeField] KeyCode jumpKey;
+
     CapsuleCollider2D mainCollider;
     Rigidbody2D rb;
     bool isGrounded;
@@ -40,42 +43,20 @@ public class CharacterController2D : MonoBehaviour
             }
         }
         //atsakingas uz player 1 valdyma
-        if (Player2 == false)
-        {
-
-            if (Input.GetKey(KeyCode.A) && Mathf.Abs(rb.velocity.x) < maxSpeed)
+            if (Input.GetKey(leftKey) && Mathf.Abs(rb.velocity.x) < maxSpeed)
             {
 
                 rb.AddForce(new Vector2(-700, 0) * Time.deltaTime);
             }
-            if (Input.GetKey(KeyCode.D) && Mathf.Abs(rb.velocity.x) < maxSpeed)
+            if (Input.GetKey(rightKey) && Mathf.Abs(rb.velocity.x) < maxSpeed)
             {
 
                 rb.AddForce(new Vector2(700, 0) * Time.deltaTime);
             }
-            if(Input.GetKey(KeyCode.W)&&isGrounded==true)
+            if(Input.GetKey(jumpKey)&&isGrounded==true)
             {
                 rb.AddForce(new Vector2(0, jumpStrength) * Time.deltaTime);
             }
         
-        }
-        //atsakingas uz player 2 valdyma
-        if (Player2 == true)
-        {
-            if (Input.GetKey(KeyCode.LeftArrow) && Mathf.Abs(rb.velocity.x) < maxSpeed)
-            {
-
-                rb.AddForce(new Vector2(-700, 0) * Time.deltaTime);
-            }
-            if (Input.GetKey(KeyCode.RightArrow) && Mathf.Abs(rb.velocity.x) < maxSpeed)
-            {
-
-                rb.AddForce(new Vector2(700, 0) * Time.deltaTime);
-            }
-            if (Input.GetKey(KeyCode.UpArrow) && isGrounded == true)
-            {
-                rb.AddForce(new Vector2(0, jumpStrength) * Time.deltaTime);
-            }
-        }
     }
 }
