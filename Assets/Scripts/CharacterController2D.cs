@@ -12,8 +12,9 @@ public class CharacterController2D : MonoBehaviour
     Rigidbody2D rb;
 
     bool isGrounded;
+    public float horizontalDrag;
     public float jumpStrength = 5;
-    public float maxSpeed = 10f;
+    public float moveSpeed;
     private float jumpTimeCounter;
     public float jumpTime = 0.5f;
     private bool isJumping;
@@ -42,15 +43,31 @@ public class CharacterController2D : MonoBehaviour
         //atsakingas uz vaiksciojima
         if (canMove)
         {
-            if (Input.GetKey(leftKey) && Mathf.Abs(rb.velocity.x) < maxSpeed)
+
+            float playerVelocity = 0;
+            if (Input.GetKey(leftKey))
             {
 
-                rb.AddForce(new Vector2(-700, 0) * Time.deltaTime);
+                playerVelocity -= moveSpeed;
             }
-            if (Input.GetKey(rightKey) && Mathf.Abs(rb.velocity.x) < maxSpeed)
+            if (Input.GetKey(rightKey))
             {
+                playerVelocity += moveSpeed;
+            }
 
-                rb.AddForce(new Vector2(700, 0) * Time.deltaTime);
+            if (playerVelocity == 0)
+            {
+                if (rb.velocity.x > 0)
+                {
+                    rb.velocity = new Vector2(Mathf.Max(0, rb.velocity.x - horizontalDrag * Time.deltaTime), rb.velocity.y);
+                }
+                else
+                {
+                    rb.velocity = new Vector2(Mathf.Min(0, rb.velocity.x + horizontalDrag * Time.deltaTime), rb.velocity.y);
+                }
+            }
+            else {
+                rb.velocity = new Vector2(playerVelocity, rb.velocity.y);
             }
 
             //atsakingas uz sokinejima

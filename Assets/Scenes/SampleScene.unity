@@ -532,11 +532,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a7a7a1aab7c43740bfcaec118b7f1c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftKey: 0
-  rightKey: 0
-  jumpKey: 0
+  leftKey: 276
+  rightKey: 275
+  jumpKey: 273
+  horizontalDrag: 20
   jumpStrength: 5
-  maxSpeed: 10
+  moveSpeed: 5
   jumpTime: 0.5
   canMove: 1
 --- !u!70 &708297705
@@ -704,8 +705,9 @@ MonoBehaviour:
   leftKey: 97
   rightKey: 100
   jumpKey: 119
+  horizontalDrag: 20
   jumpStrength: 5
-  maxSpeed: 10
+  moveSpeed: 5
   jumpTime: 0.5
   canMove: 1
 --- !u!70 &1244350470
