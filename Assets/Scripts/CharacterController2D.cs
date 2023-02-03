@@ -18,15 +18,32 @@ public class CharacterController2D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.A) && Mathf.Abs(rb.velocity.x) < maxSpeed)
+        if (Player2 == false)
         {
+            if (Input.GetKey(KeyCode.A) && Mathf.Abs(rb.velocity.x) < maxSpeed)
+            {
 
-            rb.AddForce(new Vector2(-700, 0) * Time.deltaTime);
+                rb.AddForce(new Vector2(-700, 0) * Time.deltaTime);
+            }
+            if (Input.GetKey(KeyCode.D) && Mathf.Abs(rb.velocity.x) < maxSpeed)
+            {
+
+                rb.AddForce(new Vector2(700, 0) * Time.deltaTime);
+            }
+        
         }
-        if (Input.GetKey(KeyCode.D) && Mathf.Abs(rb.velocity.x) < maxSpeed)
+        if (Player2 == true)
         {
+            if (Input.GetKey(KeyCode.LeftArrow) && Mathf.Abs(rb.velocity.x) < maxSpeed)
+            {
 
-            rb.AddForce(new Vector2(700, 0) * Time.deltaTime);
+                rb.AddForce(new Vector2(-700, 0) * Time.deltaTime);
+            }
+            if (Input.GetKey(KeyCode.RightArrow) && Mathf.Abs(rb.velocity.x) < maxSpeed)
+            {
+
+                rb.AddForce(new Vector2(700, 0) * Time.deltaTime);
+            }
         }
     }
 }
