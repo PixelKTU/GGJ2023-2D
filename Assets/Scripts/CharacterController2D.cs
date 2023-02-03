@@ -10,12 +10,14 @@ public class CharacterController2D : MonoBehaviour
 
     CapsuleCollider2D mainCollider;
     Rigidbody2D rb;
+
     bool isGrounded;
     public float jumpStrength = 5;
     public float maxSpeed = 10f;
     private float jumpTimeCounter;
     public float jumpTime = 0.5f;
     private bool isJumping;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +47,7 @@ public class CharacterController2D : MonoBehaviour
                 }
             }
         }
-        //atsakingas uz valdyma
+        //atsakingas uz vaiksciojima
         if (Input.GetKey(leftKey) && Mathf.Abs(rb.velocity.x) < maxSpeed)
         {
 
@@ -56,6 +58,8 @@ public class CharacterController2D : MonoBehaviour
 
             rb.AddForce(new Vector2(700, 0) * Time.deltaTime);
         }
+
+        //atsakingas uz sokinejima
         if(Input.GetKeyDown(jumpKey)&&isGrounded==true)
         {
             rb.velocity = Vector2.up * jumpStrength;
@@ -74,14 +78,11 @@ public class CharacterController2D : MonoBehaviour
             {
                 isJumping= false;
             }
-            
         }
         if(Input.GetKeyUp(jumpKey))
         {
 
             isJumping= false; 
         }
-        
     }
-
 }
