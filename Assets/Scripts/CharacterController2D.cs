@@ -11,8 +11,11 @@ public class CharacterController2D : MonoBehaviour
     CapsuleCollider2D mainCollider;
     Rigidbody2D rb;
     bool isGrounded;
-    public float jumpStrength = 20000;
+    public float jumpStrength = 5;
     public float maxSpeed = 10f;
+    private float jumpTimeCounter;
+    public float jumpTime = 0.5f;
+    private bool isJumping;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,21 +45,42 @@ public class CharacterController2D : MonoBehaviour
                 }
             }
         }
-        //atsakingas uz pasokima
-            if (Input.GetKey(leftKey) && Mathf.Abs(rb.velocity.x) < maxSpeed)
-            {
+        //atsakingas uz valdyma
+        if (Input.GetKey(leftKey) && Mathf.Abs(rb.velocity.x) < maxSpeed)
+        {
 
-                rb.AddForce(new Vector2(-700, 0) * Time.deltaTime);
-            }
-            if (Input.GetKey(rightKey) && Mathf.Abs(rb.velocity.x) < maxSpeed)
-            {
+            rb.AddForce(new Vector2(-700, 0) * Time.deltaTime);
+        }
+        if (Input.GetKey(rightKey) && Mathf.Abs(rb.velocity.x) < maxSpeed)
+        {
 
-                rb.AddForce(new Vector2(700, 0) * Time.deltaTime);
-            }
-            if(Input.GetKeyDown(jumpKey)&&isGrounded==true)
-            {
+            rb.AddForce(new Vector2(700, 0) * Time.deltaTime);
+        }
+        if(Input.GetKeyDown(jumpKey)&&isGrounded==true)
+        {
             rb.velocity = Vector2.up * jumpStrength;
+            jumpTimeCounter = jumpTime;
+            isJumping = true;
+
+        }
+        if (Input.GetKey(jumpKey) && isJumping == true)
+        {
+            if(jumpTimeCounter>0)
+            {
+                rb.velocity = Vector2.up * jumpStrength;
+                jumpTimeCounter -= Time.deltaTime;
             }
+            else
+            {
+                isJumping= false;
+            }
+            
+        }
+        if(Input.GetKeyUp(jumpKey))
+        {
+
+            isJumping= false; 
+        }
         
     }
 

@@ -532,9 +532,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a7a7a1aab7c43740bfcaec118b7f1c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player2: 1
+  leftKey: 0
+  rightKey: 0
+  jumpKey: 0
   jumpStrength: 20000
   maxSpeed: 10
+  jumpTime: 0
 --- !u!70 &708297705
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -696,9 +699,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a7a7a1aab7c43740bfcaec118b7f1c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player2: 0
-  jumpStrength: 20000
+  leftKey: 97
+  rightKey: 100
+  jumpKey: 119
+  jumpStrength: 5
   maxSpeed: 10
+  jumpTime: 0.5
 --- !u!70 &1244350470
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
