@@ -8,7 +8,7 @@ public class CharacterController2D : MonoBehaviour
     CapsuleCollider2D mainCollider;
     Rigidbody2D rb;
     bool isGrounded;
-    public float jumpStrength = 50000;
+    public float jumpStrength = 20000;
     public float maxSpeed = 10f;
     // Start is called before the first frame update
     void Start()
