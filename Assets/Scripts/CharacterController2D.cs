@@ -18,14 +18,17 @@ public class CharacterController2D : MonoBehaviour
     private float jumpTimeCounter;
     public float jumpTime = 0.5f;
     private bool isJumping;
+    private float startingSizeX;
 
     [HideInInspector] public bool canMove = true;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         mainCollider = GetComponent<CapsuleCollider2D>();
+        startingSizeX = transform.localScale.x;
     }
 
     // Update is called once per frame
@@ -47,11 +50,12 @@ public class CharacterController2D : MonoBehaviour
             float playerVelocity = 0;
             if (Input.GetKey(leftKey))
             {
-
+                transform.localScale = new Vector3(-startingSizeX, transform.localScale.y, transform.localScale.z); // flip sprite to the left
                 playerVelocity -= moveSpeed;
             }
             if (Input.GetKey(rightKey))
             {
+                transform.localScale = new Vector3(startingSizeX, transform.localScale.y, transform.localScale.z); // flip sprite to the right
                 playerVelocity += moveSpeed;
             }
 
