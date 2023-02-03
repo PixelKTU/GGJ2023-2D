@@ -381,7 +381,7 @@ GameObject:
   - component: {fileID: 650057211}
   - component: {fileID: 650057210}
   - component: {fileID: 650057209}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -538,6 +538,7 @@ MonoBehaviour:
   jumpStrength: 5
   maxSpeed: 10
   jumpTime: 0.5
+  canMove: 1
 --- !u!70 &708297705
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -705,6 +706,7 @@ MonoBehaviour:
   jumpStrength: 5
   maxSpeed: 10
   jumpTime: 0.5
+  canMove: 1
 --- !u!70 &1244350470
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

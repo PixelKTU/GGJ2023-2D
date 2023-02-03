@@ -18,6 +18,8 @@ public class CharacterController2D : MonoBehaviour
     public float jumpTime = 0.5f;
     private bool isJumping;
 
+    [HideInInspector] public bool canMove = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,56 +35,49 @@ public class CharacterController2D : MonoBehaviour
         float colliderRadius = mainCollider.size.x * 0.4f * Mathf.Abs(transform.localScale.x);
         Vector3 groundCheckPos = colliderBounds.min + new Vector3(colliderBounds.size.x * 0.5f, colliderRadius * 0.9f, 0);
         // Check if player is grounded
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheckPos, colliderRadius);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheckPos, colliderRadius, 128);
         //Check if any of the overlapping colliders are not player collider, if so, set isGrounded to true
-        isGrounded = false;
-        if (colliders.Length > 0)
+        isGrounded = (colliders.Length > 0);
+        
+        //atsakingas uz vaiksciojima
+        if (canMove)
         {
-            for (int i = 0; i < colliders.Length; i++)
+            if (Input.GetKey(leftKey) && Mathf.Abs(rb.velocity.x) < maxSpeed)
             {
-                if (colliders[i] != mainCollider)
+
+                rb.AddForce(new Vector2(-700, 0) * Time.deltaTime);
+            }
+            if (Input.GetKey(rightKey) && Mathf.Abs(rb.velocity.x) < maxSpeed)
+            {
+
+                rb.AddForce(new Vector2(700, 0) * Time.deltaTime);
+            }
+
+            //atsakingas uz sokinejima
+            if (Input.GetKeyDown(jumpKey) && isGrounded == true)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
+                jumpTimeCounter = jumpTime;
+                isJumping = true;
+
+            }
+            if (Input.GetKey(jumpKey) && isJumping == true)
+            {
+                if (jumpTimeCounter > 0)
                 {
-                    isGrounded = true;
-                    break;
+                    rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
+                    jumpTimeCounter -= Time.deltaTime;
+                }
+                else
+                {
+                    isJumping = false;
                 }
             }
-        }
-        //atsakingas uz vaiksciojima
-        if (Input.GetKey(leftKey) && Mathf.Abs(rb.velocity.x) < maxSpeed)
-        {
-
-            rb.AddForce(new Vector2(-700, 0) * Time.deltaTime);
-        }
-        if (Input.GetKey(rightKey) && Mathf.Abs(rb.velocity.x) < maxSpeed)
-        {
-
-            rb.AddForce(new Vector2(700, 0) * Time.deltaTime);
-        }
-
-        //atsakingas uz sokinejima
-        if(Input.GetKeyDown(jumpKey)&&isGrounded==true)
-        {
-            rb.velocity = Vector2.up * jumpStrength;
-            jumpTimeCounter = jumpTime;
-            isJumping = true;
-
-        }
-        if (Input.GetKey(jumpKey) && isJumping == true)
-        {
-            if(jumpTimeCounter>0)
+            if (Input.GetKeyUp(jumpKey))
             {
-                rb.velocity = Vector2.up * jumpStrength;
-                jumpTimeCounter -= Time.deltaTime;
-            }
-            else
-            {
-                isJumping= false;
-            }
-        }
-        if(Input.GetKeyUp(jumpKey))
-        {
 
-            isJumping= false; 
+                isJumping = false;
+            }
         }
     }
 }
