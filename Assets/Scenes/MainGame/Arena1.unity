@@ -1078,7 +1078,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8.94
+  orthographic size: 9
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2795,7 +2795,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 0263067933509384bb86eb5e41e8e69a, type: 2}
+  m_Material: {fileID: 6200000, guid: bae4546346a8eda4c9028a963876e38f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
