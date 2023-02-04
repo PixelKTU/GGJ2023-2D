@@ -104,6 +104,10 @@ public class CharacterController2D : MonoBehaviour
             }
         }
         //atsakingas uz animacija
-        animator.SetFloat("Speed",Mathf.Abs(rb.velocity.x));
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+        }
+            
     }
 }
