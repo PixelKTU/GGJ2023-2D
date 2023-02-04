@@ -128,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpAreaSize: 0.62
   timeUntilExplosion: 2
-  explosionRadius: 1.5
+  explosionRadius: 2
   maxExplosionForce: 20
   stunDuration: 1
   explosionDamage: 0

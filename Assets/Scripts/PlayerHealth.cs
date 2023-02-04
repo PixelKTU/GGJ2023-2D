@@ -26,11 +26,24 @@ public class PlayerHealth : MonoBehaviour
             if (currHealth >= amount)
             {
                 currHealth -= amount;
+                if (currHealth <= 0)
+                {
+                    Die();
+                }
             }
-            else
-            {
-                currHealth = 0;
-            }
+        }
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("death"))
+        {
+            Die();
         }
     }
 }
