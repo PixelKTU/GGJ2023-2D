@@ -43,6 +43,10 @@ public class PickUpItems : MonoBehaviour
         Bounds colliderBounds = GetComponent<Collider2D>().bounds;
         Gizmos.DrawWireSphere(colliderBounds.min + new Vector3(colliderBounds.extents.x, 0, 0), MaxDistanceToVegetable);
     }
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     private void Update()
     {
