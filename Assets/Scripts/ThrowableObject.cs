@@ -27,7 +27,7 @@ public class ThrowableObject : MonoBehaviour
 
     public virtual void Throw(Vector2 force)
     {
-        gameObject.layer = 0;
+        gameObject.layer = 10;
         gameObject.transform.parent = null;
         Rigidbody2D rigid = gameObject.GetComponent<Rigidbody2D>();
         rigid.bodyType = RigidbodyType2D.Dynamic;
@@ -75,7 +75,6 @@ public class ThrowableObject : MonoBehaviour
             Rigidbody2D rigid = gameObject.GetComponent<Rigidbody2D>();
             if (rigid.velocity.x * rigid.velocity.x + rigid.velocity.y * rigid.velocity.y == 0)
             {
-                rigid.bodyType = RigidbodyType2D.Kinematic;
                 onGround = true;
             }
         }
