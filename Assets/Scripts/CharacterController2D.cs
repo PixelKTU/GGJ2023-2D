@@ -13,12 +13,13 @@ public class CharacterController2D : MonoBehaviour
 
     bool isGrounded;
     public float horizontalDrag;
-    public float jumpStrength = 5;
+    public float jumpStrength = 8;
     public float moveSpeed;
     private float jumpTimeCounter;
     public float jumpTime = 0.5f;
     private bool isJumping;
     private float startingSizeX;
+    public float gravityScale = 5;
 
     [HideInInspector] public bool canMove = true;
     
@@ -29,6 +30,7 @@ public class CharacterController2D : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         mainCollider = GetComponent<CapsuleCollider2D>();
         startingSizeX = transform.localScale.x;
+        rb.gravityScale = gravityScale;
     }
 
     // Update is called once per frame
