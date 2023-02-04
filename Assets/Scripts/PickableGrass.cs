@@ -39,12 +39,15 @@ public class PickableGrass : MonoBehaviour
     {
         isTaken = true;
         spriteRenderer.enabled = false;
+        GetComponent<BoxCollider2D>().enabled = false;
     }
 
     public void ShowLeafs()
     {
+        containedObject = GameManager.instance.GetRandomThrowable();
         isTaken = false;
         spriteRenderer.enabled = true;
+        GetComponent<BoxCollider2D>().enabled = true;
     }
 
     void GenerateTime()

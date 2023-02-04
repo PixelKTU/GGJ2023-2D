@@ -39,7 +39,7 @@ Transform:
   m_Children:
   - {fileID: 5748888953075613269}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5748888952331163771
 SpriteRenderer:
@@ -126,7 +126,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.04, y: 1.6}
+  m_Size: {x: 1.1365379, y: 1.61}
   m_Direction: 0
 --- !u!114 &5748888952331163769
 MonoBehaviour:
@@ -243,7 +243,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 18e64b6c09a1220459427ce6703deb1f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.54
   m_Pitch: 1
   Loop: 0
   Mute: 0
