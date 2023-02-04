@@ -22,6 +22,7 @@ public class CharacterController2D : MonoBehaviour
     private float startingSizeX;
     public float gravityScale = 5;
 
+    private float stunned = 0;
     [HideInInspector] public bool canMove = true;
     
 
@@ -35,6 +36,11 @@ public class CharacterController2D : MonoBehaviour
         rb.gravityScale = gravityScale;
     }
 
+    public void Stun(float duration)
+    {
+        stunned = duration;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -46,9 +52,11 @@ public class CharacterController2D : MonoBehaviour
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheckPos, colliderRadius, 128);
         //Check if any of the overlapping colliders are not player collider, if so, set isGrounded to true
         isGrounded = (colliders.Length > 0);
-        
+        if (stunned > 0) {
+            stunned = Mathf.Max(0, stunned - Time.deltaTime);
+        }
         //atsakingas uz vaiksciojima
-        if (canMove)
+        if (canMove && stunned == 0)
         {
 
             float playerVelocity = 0;

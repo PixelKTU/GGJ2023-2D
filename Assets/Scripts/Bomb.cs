@@ -7,6 +7,7 @@ public class Bomb : ThrowableObject
     [SerializeField] float timeUntilExplosion;
     [SerializeField] float explosionRadius;
     [SerializeField] float maxExplosionForce;
+    [SerializeField] float stunDuration;
     private float _time;
     private bool _ticking = false;
 
@@ -44,6 +45,7 @@ public class Bomb : ThrowableObject
                 {
                     Vector2 velocity = collider.gameObject.transform.position - transform.position;
                     collider.GetComponent<Rigidbody2D>().velocity = velocity.normalized * maxExplosionForce;
+                    collider.GetComponent<CharacterController2D>().Stun(stunDuration);
                 }
                 Destroy(gameObject);
             }

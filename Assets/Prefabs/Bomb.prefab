@@ -165,3 +165,4 @@ MonoBehaviour:
   timeUntilExplosion: 2
   explosionRadius: 1.5
   maxExplosionForce: 20
+  stunDuration: 1
