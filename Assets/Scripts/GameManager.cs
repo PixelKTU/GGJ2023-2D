@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-
     public List<GameObject> throwables;
 
     public TextMeshProUGUI player1Health, player2Health;
+    public TextMeshProUGUI winnerTitle;
+    public GameObject winnerScreen;
 
     List<PickableGrass> grassList;
 
@@ -52,17 +54,23 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDied(int playerNumber)
     {
+        string winner = "";
         if (playerNumber == 1)
         {
             Debug.Log("player 2 won");
+            winner = "Rat";
         }
         else if (playerNumber == 2)
         {
             Debug.Log("player 1 won");
+            winner = "Cat";
         }
         else
         {
             Debug.Log("Wrong player number");
         }
+
+        winnerTitle.text = winner + " wins!";
+        winnerScreen.GetComponent<Animator>().SetTrigger("GameEnd");
     }
 }
