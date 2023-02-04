@@ -28,8 +28,9 @@ public class Bomb : ThrowableObject
         _ticking = true;
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (_ticking)
         {
             _time += Time.deltaTime;

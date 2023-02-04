@@ -96,6 +96,7 @@ public class PickUpItems : MonoBehaviour
                 // code when pulling sucessfull
                 GameObject prefab = _pickingGrass.GetComponent<PickableGrass>().containedObject;
                 _pickedObject = Instantiate(prefab, PickedObjectSpot.transform);
+                _pickedObject.layer = 9;
                 Destroy(_pickedObject.GetComponent<Rigidbody2D>());
                 _pickedObject.transform.localPosition = Vector3.zero;
                 _pickedObject.GetComponent<ThrowableObject>().Created(gameObject,prefab);
@@ -126,6 +127,7 @@ public class PickUpItems : MonoBehaviour
         if (!_pulling && _pickedObject == null)
         {
             _pickedObject = item;
+            item.layer = 9;
             item.GetComponent<ThrowableObject>().WhenPickedUp();
             Destroy(_pickedObject.GetComponent<Rigidbody2D>());
             _pickedObject.transform.parent = PickedObjectSpot.transform;

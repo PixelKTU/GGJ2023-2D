@@ -8,7 +8,7 @@ public class Potato : ThrowableObject
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         base.OnCollisionEnter2D(collision);
-        if(collision.gameObject.tag == "Player" && collision.gameObject != player)
+        if(!onGround && collision.gameObject.tag == "Player" && collision.gameObject != player)
         {
             collision.gameObject.GetComponent<PlayerHealth>().RemoveHealth(damage);
         }
