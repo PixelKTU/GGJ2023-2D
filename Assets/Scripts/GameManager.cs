@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> throwables;
 
+    public CharacterController2D player1Controller, player2Controller;
     public TextMeshProUGUI player1Health, player2Health;
     public TextMeshProUGUI winnerTitle;
     public GameObject winnerScreen;
@@ -58,11 +59,17 @@ public class GameManager : MonoBehaviour
         if (playerNumber == 1)
         {
             Debug.Log("player 2 won");
+            player2Controller.enabled = false;
+            player2Controller.GetComponent<Rigidbody2D>().isKinematic = true;
+            player2Controller.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             winner = "Rat";
         }
         else if (playerNumber == 2)
         {
             Debug.Log("player 1 won");
+            player1Controller.enabled = false;
+            player1Controller.GetComponent<Rigidbody2D>().isKinematic = true;
+            player1Controller.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             winner = "Cat";
         }
         else
