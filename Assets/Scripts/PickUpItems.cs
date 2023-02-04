@@ -104,7 +104,8 @@ public class PickUpItems : MonoBehaviour
                 _pickedObject.GetComponent<ThrowableObject>().Created(gameObject,prefab);
                 gameObject.GetComponent<CharacterController2D>().canMove = true;
                 _pulling = false;
-                Destroy(_pickingGrass);
+                //Destroy(_pickingGrass);
+                _pickingGrass.GetComponent<PickableGrass>().HideLeafs();
                 if (animator != null)
                 {
                     animator.SetBool("isPulling", false);

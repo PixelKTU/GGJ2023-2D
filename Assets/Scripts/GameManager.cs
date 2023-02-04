@@ -21,8 +21,13 @@ public class GameManager : MonoBehaviour
         grassList = FindObjectsOfType<PickableGrass>().ToList<PickableGrass>();
         foreach(PickableGrass grass in grassList)
         {
-            grass.containedObject = throwables[Random.Range(0,throwables.Count)];
+            grass.containedObject = GetRandomThrowable();
         }
+    }
+
+    public GameObject GetRandomThrowable()
+    {
+        return throwables[Random.Range(0,throwables.Count)];
     }
 
 }
