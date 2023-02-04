@@ -88,7 +88,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!70 &4379923108720147236
@@ -143,11 +143,10 @@ MonoBehaviour:
   jumpKey: 119
   animator: {fileID: 4379923108720147246}
   horizontalDrag: 20
-  jumpStrength: 20
+  jumpStrength: 8
   moveSpeed: 5
   jumpTime: 0.3
   gravityScale: 5
-  jump: {fileID: 0}
   canMove: 1
 --- !u!114 &4379923108720147240
 MonoBehaviour:
@@ -166,7 +165,6 @@ MonoBehaviour:
   PullingTime: 0.1
   ThrowForce: {x: 7, y: 2}
   PickedObjectSpot: {fileID: 0}
-  picking: {fileID: 0}
   animator: {fileID: 0}
 --- !u!114 &4379923108720147241
 MonoBehaviour:

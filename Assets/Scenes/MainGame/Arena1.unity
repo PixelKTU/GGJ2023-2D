@@ -919,7 +919,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5748888952331163769, guid: 68617b2a5cdcd4c4aae7028c535f373b, type: 3}
       propertyPath: jumpStrength
-      value: 20
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5748888952331163769, guid: 68617b2a5cdcd4c4aae7028c535f373b, type: 3}
       propertyPath: horizontalDrag
@@ -1805,7 +1805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4379923108720147239, guid: a9debbab5e8bd2d41af868437ab5c114, type: 3}
       propertyPath: jumpStrength
-      value: 20
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4379923108720147239, guid: a9debbab5e8bd2d41af868437ab5c114, type: 3}
       propertyPath: horizontalDrag
