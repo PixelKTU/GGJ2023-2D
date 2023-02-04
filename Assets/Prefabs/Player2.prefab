@@ -39,7 +39,7 @@ Transform:
   m_Children:
   - {fileID: 5748888953075613269}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5748888952331163771
 SpriteRenderer:
@@ -125,8 +125,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.1365379, y: 1.61}
+  m_Offset: {x: 0, y: 0.005777478}
+  m_Size: {x: 1.1365379, y: 1.5984452}
   m_Direction: 0
 --- !u!114 &5748888952331163769
 MonoBehaviour:
@@ -166,7 +166,7 @@ MonoBehaviour:
   DownButton: 274
   MaxDistanceToVegetable: 0.15
   PullingTime: 0.3
-  ThrowForce: {x: 12, y: 2}
+  ThrowForce: {x: 15, y: 2}
   PickedObjectSpot: {fileID: 5748888953075613258}
   picking: {fileID: 950807547}
   animator: {fileID: 0}
