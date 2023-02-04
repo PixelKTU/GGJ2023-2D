@@ -30,6 +30,7 @@ public class CharacterController2D : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         mainCollider = GetComponent<CapsuleCollider2D>();
+        animator = GetComponent<Animator>();
         startingSizeX = transform.localScale.x;
         rb.gravityScale = gravityScale;
     }
@@ -107,6 +108,7 @@ public class CharacterController2D : MonoBehaviour
         if (animator != null)
         {
             animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+            animator.SetBool("isGrounded", isGrounded);
         }
             
     }
