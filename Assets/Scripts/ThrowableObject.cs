@@ -9,7 +9,7 @@ public class ThrowableObject : MonoBehaviour
     [SerializeField] protected float jumpAreaSize;
 
     protected bool onGround = false;
-    private bool thrown = false;
+    protected bool thrown = false;
 
 
     protected virtual void OnDrawGizmos()
@@ -30,7 +30,6 @@ public class ThrowableObject : MonoBehaviour
         gameObject.layer = 10;
         gameObject.transform.parent = null;
         Rigidbody2D rigid = gameObject.GetComponent<Rigidbody2D>();
-        rigid.bodyType = RigidbodyType2D.Dynamic;
         rigid.velocity = force;
         thrown = true;
     }
