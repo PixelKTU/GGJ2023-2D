@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6078762975578252627
 SpriteRenderer:
@@ -146,18 +146,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00000023841858, y: -0.007709205}
+  m_Offset: {x: 0.035366297, y: -0.031287104}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.1875}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.2307693, y: 1.2307693}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.94, y: 0.35}
+  m_Size: {x: 0.88105536, y: 0.39715582}
   m_EdgeRadius: 0
 --- !u!114 &3494529762153916724
 MonoBehaviour:
@@ -173,6 +173,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpAreaSize: 0.6
   damage: 1
-  carrotXVelocity: 4
-  carrotStartingForce: {x: 5, y: 1}
-  timeUntilFlying: 0.3
+  carrotXVelocity: 20
+  carrotStartingForce: {x: 10, y: 1}
+  timeUntilFlying: 0.1
