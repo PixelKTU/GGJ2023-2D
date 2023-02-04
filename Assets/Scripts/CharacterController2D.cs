@@ -21,6 +21,7 @@ public class CharacterController2D : MonoBehaviour
     private bool isJumping;
     private float startingSizeX;
     public float gravityScale = 5;
+    public AudioSource jump;
 
     private float stunned = 0;
     [HideInInspector] public bool canMove = true;
@@ -92,6 +93,7 @@ public class CharacterController2D : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
                 jumpTimeCounter = jumpTime;
                 isJumping = true;
+                jump.Play();
 
             }
             if (Input.GetKey(jumpKey) && isJumping == true)

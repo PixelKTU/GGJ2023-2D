@@ -13,6 +13,8 @@ public class PickUpItems : MonoBehaviour
     float _pullingTime;
     GameObject _pickedObject = null;
     GameObject _pickingGrass = null;
+    public AudioSource picking;
+    bool soundCanBePlayed = true;
 
     public Animator animator;
 
@@ -109,17 +111,32 @@ public class PickUpItems : MonoBehaviour
                 }
             }
         }
+        
         if (animator != null)
         {
+            
             if (_pickedObject != null)
             {
                 animator.SetBool("holdingItem", true);
+                
             }
             else
             {
                 animator.SetBool("holdingItem", false);
             }
         }
+        
+        if(_pickedObject!=null&&soundCanBePlayed==true)
+        {
+            picking.Play();
+            soundCanBePlayed = false;
+        }
+        if(_pickedObject==null)
+        {
+            soundCanBePlayed = true;
+        }
+
+
     }
 
     public void PickUpExistingItem(GameObject item)
