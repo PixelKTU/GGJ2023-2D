@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0082b4eea9d52834a94fc2253d34bfd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpAreaSize: 0.5
   timeUntilExplosion: 2
   explosionRadius: 1.5
   maxExplosionForce: 20

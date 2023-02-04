@@ -12,7 +12,6 @@ public class PickUpItems : MonoBehaviour
     bool _pulling = false;
     float _pullingTime;
     GameObject _pickedObject = null;
-    GameObject _pickingPrefab = null;
     GameObject _pickingGrass = null;
 
     public Animator animator;
@@ -65,42 +64,41 @@ public class PickUpItems : MonoBehaviour
                     gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
                     gameObject.transform.position = new Vector3(colliders[0].gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
                     _pickingGrass = colliders[0].gameObject;
-                    _pickingPrefab = colliders[0].GetComponent<PickableGrass>().containedObject;
                     _pulling = true;
                     _pullingTime = 0;
                     if (animator != null)
                     {
-                        animator.SetBool("isPulling",true);
+                        animator.SetBool("isPulling", true);
                     }
                 }
             }
             else
             {
-
-                CopyComponent<Rigidbody2D>(_pickingPrefab.GetComponent<Rigidbody2D>(), _pickedObject);
+                ThrowableObject throwobj = _pickedObject.GetComponent<ThrowableObject>();
+                CopyComponent<Rigidbody2D>(throwobj.prefab.GetComponent<Rigidbody2D>(), _pickedObject);
 
                 if (gameObject.transform.localScale.x > 0)
                 {
-                    _pickedObject.GetComponent<ThrowableObject>().Throw(ThrowForce);
+                    throwobj.Throw(ThrowForce);
                 }
                 else
                 {
-                    _pickedObject.GetComponent<ThrowableObject>().Throw(new Vector2(-ThrowForce.x, ThrowForce.y));
+                    throwobj.Throw(new Vector2(-ThrowForce.x, ThrowForce.y));
                 }
                 _pickedObject = null;
-                _pickingPrefab = null;
             }
         }
         if (_pulling)
         {
             _pullingTime += Time.deltaTime;
-            if(_pullingTime >= PullingTime)
+            if (_pullingTime >= PullingTime)
             {
                 // code when pulling sucessfull
-                _pickedObject = Instantiate(_pickingPrefab, PickedObjectSpot.transform);
+                GameObject prefab = _pickingGrass.GetComponent<PickableGrass>().containedObject;
+                _pickedObject = Instantiate(prefab, PickedObjectSpot.transform);
                 Destroy(_pickedObject.GetComponent<Rigidbody2D>());
                 _pickedObject.transform.localPosition = Vector3.zero;
-                _pickedObject.GetComponent<ThrowableObject>().Created(gameObject);
+                _pickedObject.GetComponent<ThrowableObject>().Created(gameObject,prefab);
                 gameObject.GetComponent<CharacterController2D>().canMove = true;
                 _pulling = false;
                 Destroy(_pickingGrass);
@@ -122,4 +120,19 @@ public class PickUpItems : MonoBehaviour
             }
         }
     }
+
+    public void PickUpExistingItem(GameObject item)
+    {
+        if (!_pulling && _pickedObject == null)
+        {
+            _pickedObject = item;
+            item.GetComponent<ThrowableObject>().WhenPickedUp();
+            Destroy(_pickedObject.GetComponent<Rigidbody2D>());
+            _pickedObject.transform.parent = PickedObjectSpot.transform;
+            _pickedObject.transform.localPosition = Vector3.zero;
+            ThrowableObject throwobj = _pickedObject.GetComponent<ThrowableObject>();
+            throwobj.Created(gameObject,throwobj.prefab);
+        }
+    }
+
 }

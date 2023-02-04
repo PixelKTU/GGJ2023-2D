@@ -11,17 +11,25 @@ public class Bomb : ThrowableObject
     private bool _ticking = false;
 
 
-    private void OnDrawGizmos()
+    protected override void OnDrawGizmos()
     {
+        base.OnDrawGizmos();
+
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(gameObject.transform.position, explosionRadius);
     }
+    
 
     public override void Throw(Vector2 force)
     {
         base.Throw(force);
         _time = 0;
         _ticking = true;
+    }
+
+    public override void WhenPickedUp()
+    {
+        _ticking = false;
     }
 
     private void Update()
