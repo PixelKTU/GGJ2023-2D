@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
     public List<GameObject> throwables;
+
+    public TextMeshProUGUI player1Health, player2Health;
 
     List<PickableGrass> grassList;
 
@@ -30,4 +33,19 @@ public class GameManager : MonoBehaviour
         return throwables[Random.Range(0,throwables.Count)];
     }
 
+    public void UpdateHealthUI(int playerNumber, int health)
+    {
+        if (playerNumber == 1)
+        {
+            player1Health.text = health.ToString();
+        }
+        else if (playerNumber == 2)
+        {
+            player2Health.text = health.ToString();
+        }
+        else
+        {
+            Debug.Log("Wrong player number");
+        }
+    }
 }
