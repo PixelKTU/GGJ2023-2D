@@ -611,6 +611,16 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4379923109001547266, guid: a9debbab5e8bd2d41af868437ab5c114, type: 3}
   m_PrefabInstance: {fileID: 4379923109627736866}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1103269671 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5748888952331163770, guid: 68617b2a5cdcd4c4aae7028c535f373b, type: 3}
+  m_PrefabInstance: {fileID: 5748888953078835269}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2110387206 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5748888953075613258, guid: 68617b2a5cdcd4c4aae7028c535f373b, type: 3}
+  m_PrefabInstance: {fileID: 5748888953078835269}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4379923109627736866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -643,6 +653,10 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 276733283}
+    - target: {fileID: 4379923108720147240, guid: a9debbab5e8bd2d41af868437ab5c114, type: 3}
+      propertyPath: DownButton
+      value: 115
+      objectReference: {fileID: 0}
     - target: {fileID: 4379923108720147240, guid: a9debbab5e8bd2d41af868437ab5c114, type: 3}
       propertyPath: PickedObjectSpot
       value: 
@@ -768,6 +782,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5748888952331163774, guid: 68617b2a5cdcd4c4aae7028c535f373b, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 1103269671}
+    - target: {fileID: 5748888952331163774, guid: 68617b2a5cdcd4c4aae7028c535f373b, type: 3}
+      propertyPath: PickedObjectSpot
+      value: 
+      objectReference: {fileID: 2110387206}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
