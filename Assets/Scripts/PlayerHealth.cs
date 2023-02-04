@@ -40,6 +40,9 @@ public class PlayerHealth : MonoBehaviour
 
     public void Die()
     {
+        currHealth = 0;
+        GameManager.instance.UpdateHealthUI(playerNumber, currHealth);
+        GameManager.instance.PlayerDied(playerNumber);
         Destroy(gameObject);
     }
 

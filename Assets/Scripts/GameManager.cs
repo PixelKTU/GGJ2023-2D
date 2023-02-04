@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+
     public List<GameObject> throwables;
 
     public TextMeshProUGUI player1Health, player2Health;
@@ -42,6 +43,22 @@ public class GameManager : MonoBehaviour
         else if (playerNumber == 2)
         {
             player2Health.text = health.ToString();
+        }
+        else
+        {
+            Debug.Log("Wrong player number");
+        }
+    }
+
+    public void PlayerDied(int playerNumber)
+    {
+        if (playerNumber == 1)
+        {
+            Debug.Log("player 2 won");
+        }
+        else if (playerNumber == 2)
+        {
+            Debug.Log("player 1 won");
         }
         else
         {
