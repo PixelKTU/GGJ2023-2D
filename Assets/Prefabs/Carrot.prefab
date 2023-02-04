@@ -112,7 +112,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &3393878439935325032
 BoxCollider2D:
@@ -173,6 +173,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpAreaSize: 0.6
   damage: 1
-  carrotXVelocity: 20
+  carrotXVelocity: 10
   carrotStartingForce: {x: 10, y: 1}
   timeUntilFlying: 0.1

@@ -16,6 +16,7 @@ public class Potato : ThrowableObject
             collision.gameObject.GetComponent<CharacterController2D>().Stun(stunSize);
             Vector2 direction = (collision.gameObject.transform.position - gameObject.transform.position).normalized;
             collision.gameObject.GetComponent<Rigidbody2D>().velocity = direction * knowbackForce;
+            onGround = true;
         }
     }
 }

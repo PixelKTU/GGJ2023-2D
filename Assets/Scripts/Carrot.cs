@@ -16,12 +16,12 @@ public class Carrot : ThrowableObject
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         base.OnCollisionEnter2D(collision);
-        if (!onGround && collision.gameObject.tag == "Player" && collision.gameObject != player)
+        if (thrown && collision.gameObject.tag == "Player" && collision.gameObject != player)
         {
             // when carrot hits player
             collision.gameObject.GetComponent<PlayerHealth>().RemoveHealth(damage);
             Destroy(gameObject);
-        }else if (collision.gameObject.layer == 7 || collision.gameObject.layer == 10 || (flying && collision.gameObject.tag == "Player" && collision.gameObject == player))
+        }else if (thrown && collision.gameObject.tag != "Player")//(true || collision.gameObject.layer == 7 || collision.gameObject.layer == 10))
         {
             // when carrot hits ground or other object
             Destroy(gameObject);
@@ -35,7 +35,7 @@ public class Carrot : ThrowableObject
         
         thrown = true;
         rigid = GetComponent<Rigidbody2D>();
-        if (force.x < 0)
+        if ((force.x < 0 && carrotXVelocity > 0) || (force.x > 0 && carrotXVelocity < 0))
         {
             carrotXVelocity *= -1;
             carrotStartingForce = new Vector2(-carrotStartingForce.x, carrotStartingForce.y);
@@ -44,6 +44,12 @@ public class Carrot : ThrowableObject
         time = timeUntilFlying;
         flying = false;
         
+    }
+
+    public override void WhenPickedUp()
+    {
+        base.WhenPickedUp();
+        rigid.gravityScale = prefab.GetComponent<Rigidbody2D>().gravityScale;
     }
 
     protected override void Update()
@@ -55,9 +61,10 @@ public class Carrot : ThrowableObject
                 if (!flying)
                 {
                     flying = true;
-                    rigid.bodyType = RigidbodyType2D.Kinematic;
+                    rigid.gravityScale = 0;
                 }
-                rigid.velocity = new Vector2(carrotXVelocity, 0);
+                rigid.AddForce(new Vector2(carrotXVelocity, 0));
+                rigid.velocity = new Vector2(rigid.velocity.x, 0);
             }
             else
             {

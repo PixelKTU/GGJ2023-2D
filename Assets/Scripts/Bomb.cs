@@ -52,4 +52,25 @@ public class Bomb : ThrowableObject
             }
         }
     }
+
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);
+        if (thrown && collision.gameObject.tag == "Player" && collision.gameObject != player)
+        {
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, 256);
+            foreach (Collider2D collider in colliders)
+            {
+                if (transform.parent != null)
+                {
+                    transform.parent.parent.GetComponent<PickUpItems>().ItemRemovedFromHands();
+                }
+                Vector2 velocity = collider.gameObject.transform.position - transform.position;
+                collider.GetComponent<Rigidbody2D>().velocity = velocity.normalized * maxExplosionForce;
+                collider.GetComponent<CharacterController2D>().Stun(stunDuration);
+                collider.GetComponent<PlayerHealth>().RemoveHealth(explosionDamage);
+            }
+            Destroy(gameObject);
+        }
+    }
 }
