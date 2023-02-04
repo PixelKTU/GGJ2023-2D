@@ -9,12 +9,15 @@ public class PickableGrass : MonoBehaviour
     float currTime, genTime;
     public bool isTaken;
     SpriteRenderer spriteRenderer;
+    Animator animator;
 
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         isTaken = false;
         currTime = 0;
+        animator = GetComponent<Animator>();
+        animator.Play("Idle", 0, Random.Range(0,animator.GetCurrentAnimatorStateInfo(0).length));
         GenerateTime();
     }
 
@@ -28,7 +31,8 @@ public class PickableGrass : MonoBehaviour
             }
             else
             {
-                ShowLeafs();
+                animator.SetBool("Cut", false);
+                animator.SetBool("Growing", true);
                 currTime = 0;
                 GenerateTime();
             }
@@ -38,7 +42,7 @@ public class PickableGrass : MonoBehaviour
     public void HideLeafs()
     {
         isTaken = true;
-        spriteRenderer.enabled = false;
+        animator.SetBool("Cut", true);
         GetComponent<BoxCollider2D>().enabled = false;
     }
 
@@ -46,12 +50,12 @@ public class PickableGrass : MonoBehaviour
     {
         containedObject = GameManager.instance.GetRandomThrowable();
         isTaken = false;
-        spriteRenderer.enabled = true;
+        animator.SetBool("Growing", false);
         GetComponent<BoxCollider2D>().enabled = true;
     }
 
     void GenerateTime()
     {
-        genTime = Random.Range(minSpawnTime, maxSpawnTime);
+       genTime = Random.Range(minSpawnTime, maxSpawnTime);
     }
 }
