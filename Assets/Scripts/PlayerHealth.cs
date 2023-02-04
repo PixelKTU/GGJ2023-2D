@@ -5,17 +5,20 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 3;
+    public int playerNumber;
     public int currHealth;
 
     // Start is called before the first frame update
     void Start()
     {
         currHealth = maxHealth;
+        GameManager.instance.UpdateHealthUI(playerNumber, currHealth);
     }
 
     public void AddHealth(int amount)
     {
         currHealth += amount;
+        GameManager.instance.UpdateHealthUI(playerNumber, currHealth);
     }
     
     public void RemoveHealth(int amount)
@@ -26,6 +29,7 @@ public class PlayerHealth : MonoBehaviour
             if (currHealth >= amount)
             {
                 currHealth -= amount;
+                GameManager.instance.UpdateHealthUI(playerNumber, currHealth);
                 if (currHealth <= 0)
                 {
                     Die();
