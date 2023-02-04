@@ -1374,7 +1374,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0263067933509384bb86eb5e41e8e69a, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2009,7 +2009,7 @@ MonoBehaviour:
   DownButton: 274
   MaxDistanceToVegetable: 0.15
   PullingTime: 0.1
-  ThrowForce: {x: 5, y: 0}
+  ThrowForce: {x: 7, y: 2}
   PickedObjectSpot: {fileID: 313563148}
 --- !u!114 &1803175039
 MonoBehaviour:
@@ -2026,6 +2026,7 @@ MonoBehaviour:
   leftKey: 276
   rightKey: 275
   jumpKey: 273
+  animator: {fileID: 0}
   horizontalDrag: 100
   jumpStrength: 5
   moveSpeed: 5
