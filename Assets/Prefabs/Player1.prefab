@@ -160,12 +160,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583881677cee1864f8c0c8a672330566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DownButton: 115
+  DownButton: 274
   MaxDistanceToVegetable: 0.15
-  PullingTime: 2
-  ThrowForce: {x: 5, y: 0}
-  PickedObjectSpot: {fileID: 4379923109001547266}
-  animator: {fileID: 4379923108720147246}
+  PullingTime: 0.1
+  ThrowForce: {x: 7, y: 2}
+  PickedObjectSpot: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!114 &4379923108720147241
 MonoBehaviour:
   m_ObjectHideFlags: 0

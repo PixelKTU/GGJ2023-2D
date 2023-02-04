@@ -162,10 +162,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DownButton: 274
   MaxDistanceToVegetable: 0.15
-  PullingTime: 2
-  ThrowForce: {x: 5, y: 0}
-  PickedObjectSpot: {fileID: 5748888953075613258}
-  animator: {fileID: 5748888952331163770}
+  PullingTime: 0.1
+  ThrowForce: {x: 7, y: 2}
+  PickedObjectSpot: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!114 &5748888952331163775
 MonoBehaviour:
   m_ObjectHideFlags: 0
