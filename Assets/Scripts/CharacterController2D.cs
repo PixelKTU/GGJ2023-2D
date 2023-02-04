@@ -10,6 +10,7 @@ public class CharacterController2D : MonoBehaviour
 
     CapsuleCollider2D mainCollider;
     Rigidbody2D rb;
+    public Animator animator;
 
     bool isGrounded;
     public float horizontalDrag;
@@ -102,5 +103,7 @@ public class CharacterController2D : MonoBehaviour
                 isJumping = false;
             }
         }
+        //atsakingas uz animacija
+        animator.SetFloat("Speed",Mathf.Abs(rb.velocity.x));
     }
 }
