@@ -15,6 +15,8 @@ public class PickUpItems : MonoBehaviour
     GameObject _pickingPrefab = null;
     GameObject _pickingGrass = null;
 
+    public Animator animator;
+
 
     T CopyComponent<T>(T original, GameObject destination) where T : Component
     {
@@ -62,6 +64,10 @@ public class PickUpItems : MonoBehaviour
                     _pickingPrefab = colliders[0].GetComponent<PickableGrass>().containedObject;
                     _pulling = true;
                     _pullingTime = 0;
+                    if (animator != null)
+                    {
+                        animator.SetBool("isPulling",true);
+                    }
                 }
             }
             else
@@ -94,6 +100,21 @@ public class PickUpItems : MonoBehaviour
                 gameObject.GetComponent<CharacterController2D>().canMove = true;
                 _pulling = false;
                 Destroy(_pickingGrass);
+                if (animator != null)
+                {
+                    animator.SetBool("isPulling", false);
+                }
+            }
+        }
+        if (animator != null)
+        {
+            if (_pickedObject != null)
+            {
+                animator.SetBool("holdingItem", true);
+            }
+            else
+            {
+                animator.SetBool("holdingItem", false);
             }
         }
     }
