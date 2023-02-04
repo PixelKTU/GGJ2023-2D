@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8581102691546107267}
   - component: {fileID: -4815961019683719794}
   - component: {fileID: 5607338098199997931}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,6 +131,7 @@ MonoBehaviour:
   explosionRadius: 1.5
   maxExplosionForce: 20
   stunDuration: 1
+  explosionDamage: 0
 --- !u!61 &5607338098199997931
 BoxCollider2D:
   m_ObjectHideFlags: 0

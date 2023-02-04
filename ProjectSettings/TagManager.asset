@@ -14,8 +14,8 @@ TagManager:
   - Pickable
   - Ground
   - Player
-  - 
-  - 
+  - PickedObject
+  - ObjectInTheWorld
   - 
   - 
   - 

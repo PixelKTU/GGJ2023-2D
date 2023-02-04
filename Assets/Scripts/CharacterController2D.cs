@@ -49,7 +49,7 @@ public class CharacterController2D : MonoBehaviour
         float colliderRadius = mainCollider.size.x * 0.4f * Mathf.Abs(transform.localScale.x);
         Vector3 groundCheckPos = colliderBounds.min + new Vector3(colliderBounds.size.x * 0.5f, colliderRadius * 0.9f, 0);
         // Check if player is grounded
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheckPos, colliderRadius, 128);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheckPos, colliderRadius, 1152);
         //Check if any of the overlapping colliders are not player collider, if so, set isGrounded to true
         isGrounded = (colliders.Length > 0);
         if (stunned > 0) {
