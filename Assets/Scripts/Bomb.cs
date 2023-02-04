@@ -5,8 +5,8 @@ using UnityEngine;
 public class Bomb : ThrowableObject
 {
     [SerializeField] float timeUntilExplosion;
-    [SerializeField] int explosionDamage;
     [SerializeField] float explosionRadius;
+    [SerializeField] float maxExplosionForce;
     private float _time;
     private bool _ticking = false;
 
@@ -34,7 +34,8 @@ public class Bomb : ThrowableObject
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, 256);
                 foreach(Collider2D collider in colliders)
                 {
-                    collider.GetComponent<PlayerHealth>().RemoveHealth(explosionDamage);
+                    Vector2 velocity = collider.gameObject.transform.position - transform.position;
+                    collider.GetComponent<Rigidbody2D>().velocity = velocity.normalized * maxExplosionForce;
                 }
                 Destroy(gameObject);
             }

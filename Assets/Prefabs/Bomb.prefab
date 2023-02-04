@@ -162,5 +162,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeUntilExplosion: 2
-  explosionDamage: 1
   explosionRadius: 1.5
+  maxExplosionForce: 20
