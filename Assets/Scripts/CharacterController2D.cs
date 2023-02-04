@@ -96,18 +96,6 @@ public class CharacterController2D : MonoBehaviour
                 jump.Play();
 
             }
-            if (Input.GetKey(jumpKey) && isJumping == true)
-            {
-                if (jumpTimeCounter > 0)
-                {
-                    rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
-                    jumpTimeCounter -= Time.deltaTime;
-                }
-                else
-                {
-                    isJumping = false;
-                }
-            }
             if (Input.GetKeyUp(jumpKey))
             {
 
