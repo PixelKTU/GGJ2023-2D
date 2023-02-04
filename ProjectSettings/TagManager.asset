@@ -59,3 +59,6 @@ TagManager:
   - name: throwable
     uniqueID: 1391722853
     locked: 0
+  - name: waves
+    uniqueID: 2468573885
+    locked: 0
