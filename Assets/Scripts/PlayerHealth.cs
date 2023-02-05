@@ -53,7 +53,7 @@ public class PlayerHealth : MonoBehaviour
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         GetComponent<Collider2D>().enabled = false;
         GetComponent<CharacterController2D>().canMove = false;
-        GetComponent<Animator>().Play("Death");
+        GetComponent<PickUpItems>().DeleteItemFromHands();
         death.Play();
         dead = true;
     }

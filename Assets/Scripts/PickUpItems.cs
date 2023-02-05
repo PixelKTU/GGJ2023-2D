@@ -176,4 +176,13 @@ public class PickUpItems : MonoBehaviour
         _pickedObject = null;
     }
 
+    public void DeleteItemFromHands()
+    {
+        if (_pickedObject != null)
+        {
+            Destroy(_pickedObject);
+            _pickedObject = null;
+        }
+    }
+
 }
