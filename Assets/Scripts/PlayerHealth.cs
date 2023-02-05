@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     public int playerNumber;
     public int currHealth;
     public AudioSource death;
+    public AudioSource hit;
 
     public bool dead = false;
     [SerializeField] float ghostYSpeed;
@@ -33,6 +34,7 @@ public class PlayerHealth : MonoBehaviour
             if (currHealth >= amount)
             {
                 currHealth -= amount;
+                hit.Play();
                 GameManager.instance.UpdateHealthUI(playerNumber, currHealth);
                 if (currHealth <= 0)
                 {
