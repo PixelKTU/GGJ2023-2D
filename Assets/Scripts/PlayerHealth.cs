@@ -7,6 +7,7 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 3;
     public int playerNumber;
     public int currHealth;
+    public AudioSource death;
 
     public bool dead = false;
     [SerializeField] float ghostYSpeed;
@@ -51,6 +52,7 @@ public class PlayerHealth : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
         GetComponent<CharacterController2D>().canMove = false;
         GetComponent<Animator>().Play("Death");
+        death.Play();
         dead = true;
     }
 
