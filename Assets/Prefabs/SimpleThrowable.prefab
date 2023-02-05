@@ -101,6 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpAreaSize: 0.25
   damage: 1
+  stunSize: 0.3
+  knowbackForce: 5
 --- !u!50 &-2505409466210958046
 Rigidbody2D:
   serializedVersion: 4
