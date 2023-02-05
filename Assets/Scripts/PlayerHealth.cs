@@ -8,6 +8,9 @@ public class PlayerHealth : MonoBehaviour
     public int playerNumber;
     public int currHealth;
 
+    public bool dead = false;
+    [SerializeField] float ghostYSpeed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +23,7 @@ public class PlayerHealth : MonoBehaviour
         currHealth += amount;
         GameManager.instance.UpdateHealthUI(playerNumber, currHealth);
     }
-    
+
     public void RemoveHealth(int amount)
     {
 
@@ -43,7 +46,12 @@ public class PlayerHealth : MonoBehaviour
         currHealth = 0;
         GameManager.instance.UpdateHealthUI(playerNumber, currHealth);
         GameManager.instance.PlayerDied(playerNumber);
-        Destroy(gameObject);
+        GetComponent<Animator>().SetBool("Death", true);
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<CharacterController2D>().canMove = false;
+        GetComponent<Animator>().Play("Death");
+        dead = true;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -51,6 +59,14 @@ public class PlayerHealth : MonoBehaviour
         if (collision.collider.CompareTag("death"))
         {
             Die();
+        }
+    }
+
+    private void Update()
+    {
+        if (dead)
+        {
+            gameObject.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + ghostYSpeed * Time.deltaTime);
         }
     }
 }

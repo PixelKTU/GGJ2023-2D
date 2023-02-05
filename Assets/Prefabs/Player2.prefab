@@ -185,6 +185,8 @@ MonoBehaviour:
   maxHealth: 3
   playerNumber: 2
   currHealth: 0
+  dead: 0
+  ghostYSpeed: 1
 --- !u!50 &5748888952331163772
 Rigidbody2D:
   serializedVersion: 4

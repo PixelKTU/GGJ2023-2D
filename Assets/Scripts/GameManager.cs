@@ -15,8 +15,11 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI player1Health, player2Health;
     public TextMeshProUGUI winnerTitle;
     public GameObject winnerScreen;
+    [SerializeField] float timeUntilWinUi;
 
     List<PickableGrass> grassList;
+
+    private int _winner;
 
     private void Awake()
     {
@@ -26,6 +29,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         grassList = FindObjectsOfType<PickableGrass>().ToList<PickableGrass>();
+        _winner = -1;
         foreach(PickableGrass grass in grassList)
         {
             grass.containedObject = GetRandomThrowable();
@@ -55,29 +59,39 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDied(int playerNumber)
     {
-        string winner = "";
-        if (playerNumber == 1)
+        if (_winner == -1)
         {
-            Debug.Log("player 2 won");
-            player2Controller.enabled = false;
-            player2Controller.GetComponent<Rigidbody2D>().isKinematic = true;
-            player2Controller.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            winner = "Rat";
-        }
-        else if (playerNumber == 2)
-        {
-            Debug.Log("player 1 won");
-            player1Controller.enabled = false;
-            player1Controller.GetComponent<Rigidbody2D>().isKinematic = true;
-            player1Controller.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            winner = "Cat";
-        }
-        else
-        {
-            Debug.Log("Wrong player number");
-        }
+            _winner = playerNumber;
+            string winner = "";
+            if (playerNumber == 1)
+            {
+                Debug.Log("player 2 won");
+                player2Controller.enabled = false;
+                player2Controller.GetComponent<Rigidbody2D>().isKinematic = true;
+                player2Controller.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                winner = "Rat";
+            }
+            else if (playerNumber == 2)
+            {
+                Debug.Log("player 1 won");
+                player1Controller.enabled = false;
+                player1Controller.GetComponent<Rigidbody2D>().isKinematic = true;
+                player1Controller.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                winner = "Cat";
+            }
+            else
+            {
+                Debug.Log("Wrong player number");
+            }
 
-        winnerTitle.text = winner + " wins!";
+            winnerTitle.text = winner + " wins!";
+            StartCoroutine(WaitWinUi());
+        }
+    }
+
+    IEnumerator WaitWinUi()
+    {
+        yield return new WaitForSeconds(timeUntilWinUi);
         winnerScreen.GetComponent<Animator>().SetTrigger("GameEnd");
     }
 }
