@@ -36,19 +36,8 @@ public class Bomb : ThrowableObject
             _time += Time.deltaTime;
             if(_time >= timeUntilExplosion)
             {
-                Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, 256);
-                foreach(Collider2D collider in colliders)
-                {
-                    if (transform.parent != null)
-                    {
-                        transform.parent.parent.GetComponent<PickUpItems>().ItemRemovedFromHands();
-                    }
-                    Vector2 velocity = collider.gameObject.transform.position - transform.position;
-                    collider.GetComponent<Rigidbody2D>().velocity = velocity.normalized * maxExplosionForce;
-                    collider.GetComponent<CharacterController2D>().Stun(stunDuration);
-                    collider.GetComponent<PlayerHealth>().RemoveHealth(explosionDamage);
-                }
-                Destroy(gameObject);
+               
+                Explode();
             }
         }
     }
@@ -56,21 +45,41 @@ public class Bomb : ThrowableObject
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         base.OnCollisionEnter2D(collision);
-        if (thrown && collision.gameObject.tag == "Player" && collision.gameObject != player)
+        if (thrown && _ticking && collision.gameObject.tag == "Player" && collision.gameObject != player)
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, 256);
-            foreach (Collider2D collider in colliders)
-            {
-                if (transform.parent != null)
-                {
-                    transform.parent.parent.GetComponent<PickUpItems>().ItemRemovedFromHands();
-                }
-                Vector2 velocity = collider.gameObject.transform.position - transform.position;
-                collider.GetComponent<Rigidbody2D>().velocity = velocity.normalized * maxExplosionForce;
-                collider.GetComponent<CharacterController2D>().Stun(stunDuration);
-                collider.GetComponent<PlayerHealth>().RemoveHealth(explosionDamage);
-            }
-            Destroy(gameObject);
+            Explode();
         }
+    }
+
+    private void Explode()
+    {
+        _ticking = false;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, 256);
+        foreach (Collider2D collider in colliders)
+        {
+            if (transform.parent != null)
+            {
+                transform.parent.parent.GetComponent<PickUpItems>().ItemRemovedFromHands();
+            }
+            Vector2 velocity = collider.gameObject.transform.position - transform.position;
+            collider.GetComponent<Rigidbody2D>().velocity = velocity.normalized * maxExplosionForce;
+            collider.GetComponent<CharacterController2D>().Stun(stunDuration);
+            collider.GetComponent<PlayerHealth>().RemoveHealth(explosionDamage);
+        }
+        GetComponent<Animator>().SetBool("Explode", true);
+        if (GetComponent<Rigidbody2D>() != null)
+        {
+            GetComponent<Rigidbody2D>().isKinematic = true;
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
+        if (GetComponent<AudioSource>() != null)
+        {
+            GetComponent<AudioSource>().Play();
+        }
+    }
+
+    public void DestroyGameobject()
+    {
+        Destroy(gameObject);
     }
 }
