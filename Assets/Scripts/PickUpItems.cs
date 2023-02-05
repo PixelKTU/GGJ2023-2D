@@ -14,9 +14,13 @@ public class PickUpItems : MonoBehaviour
     GameObject _pickedObject = null;
     GameObject _pickingGrass = null;
     public AudioSource picking;
+    public AudioSource throwSound;
     bool soundCanBePlayed = true;
 
     public Animator animator;
+    public bool currentHolding = false;
+    public bool previousHolding= false;
+    
 
 
     T CopyComponent<T>(T original, GameObject destination) where T : Component
@@ -136,7 +140,19 @@ public class PickUpItems : MonoBehaviour
         {
             soundCanBePlayed = true;
         }
-
+        previousHolding = currentHolding;
+        if (_pickedObject == null)
+        {
+            currentHolding = false;
+        }
+        else if (_pickedObject != null)
+        {
+            currentHolding= true;
+        }
+        if(currentHolding==false&&previousHolding==true)
+        {
+           throwSound.Play();
+        }
 
     }
 
