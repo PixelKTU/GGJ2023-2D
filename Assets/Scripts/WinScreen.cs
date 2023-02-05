@@ -7,12 +7,12 @@ public class WinScreen : MonoBehaviour
 {
     public void NextMatch()
     {
-        //SceneManager.LoadScene(GetRandomArena());
+        SceneManager.LoadScene(GetRandomArena());
     }
 
     public void Menu()
     {
-        //SceneManager.LoadScene(0);
+        SceneManager.LoadScene(0);
     }
 
     int GetRandomArena()
