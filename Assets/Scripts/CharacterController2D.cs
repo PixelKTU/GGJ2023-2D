@@ -25,7 +25,7 @@ public class CharacterController2D : MonoBehaviour
 
     private float stunned = 0;
     [HideInInspector] public bool canMove = true;
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +53,8 @@ public class CharacterController2D : MonoBehaviour
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheckPos, colliderRadius, 1152);
         //Check if any of the overlapping colliders are not player collider, if so, set isGrounded to true
         isGrounded = (colliders.Length > 0);
-        if (stunned > 0) {
+        if (stunned > 0)
+        {
             stunned = Mathf.Max(0, stunned - Time.deltaTime);
         }
         //atsakingas uz vaiksciojima
@@ -83,7 +84,8 @@ public class CharacterController2D : MonoBehaviour
                     rb.velocity = new Vector2(Mathf.Min(0, rb.velocity.x + horizontalDrag * Time.deltaTime), rb.velocity.y);
                 }
             }
-            else {
+            else
+            {
                 rb.velocity = new Vector2(playerVelocity, rb.velocity.y);
             }
 
@@ -108,6 +110,6 @@ public class CharacterController2D : MonoBehaviour
             animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
             animator.SetBool("isGrounded", isGrounded);
         }
-            
+
     }
 }

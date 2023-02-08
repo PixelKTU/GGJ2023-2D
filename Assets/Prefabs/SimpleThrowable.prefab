@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0efecbb8205adb41aeb6440016b1240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpAreaSize: 0.25
+  jumpAreaSize: 0.6
   damage: 1
   stunSize: 0.3
   knowbackForce: 5
