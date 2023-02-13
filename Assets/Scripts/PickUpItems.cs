@@ -20,7 +20,8 @@ public class PickUpItems : MonoBehaviour
     public Animator animator;
     public bool currentHolding = false;
     public bool previousHolding= false;
-    
+
+    PlayerHealth health;
 
 
     T CopyComponent<T>(T original, GameObject destination) where T : Component
@@ -51,11 +52,12 @@ public class PickUpItems : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        health = GetComponent<PlayerHealth>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(DownButton))
+        if (!health.dead && Input.GetKeyDown(DownButton))
         {
             if (_pickedObject == null)
             {
@@ -158,7 +160,7 @@ public class PickUpItems : MonoBehaviour
 
     public void PickUpExistingItem(GameObject item)
     {
-        if (!_pulling && _pickedObject == null)
+        if (!health.dead && !_pulling && _pickedObject == null)
         {
             _pickedObject = item;
             item.layer = 9;

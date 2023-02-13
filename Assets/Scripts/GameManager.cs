@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("player 2 won");
                 player2Controller.enabled = false;
-                player2Controller.GetComponent<Rigidbody2D>().isKinematic = true;
+                player2Controller.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 player2Controller.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 winner = "Rat";
             }
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("player 1 won");
                 player1Controller.enabled = false;
-                player1Controller.GetComponent<Rigidbody2D>().isKinematic = true;
+                player1Controller.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 player1Controller.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 winner = "Cat";
             }
