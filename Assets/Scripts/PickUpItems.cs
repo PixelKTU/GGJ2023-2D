@@ -72,6 +72,7 @@ public class PickUpItems : MonoBehaviour
                     gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
                     gameObject.transform.position = new Vector3(colliders[0].gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
                     _pickingGrass = colliders[0].gameObject;
+                    _pickingGrass.GetComponent<PickableGrass>().StartPicking();
                     _pulling = true;
                     _pullingTime = 0;
                     if (animator != null)

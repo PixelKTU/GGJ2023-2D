@@ -39,11 +39,15 @@ public class PickableGrass : MonoBehaviour
         }
     }
 
+    public void StartPicking()
+    {
+        GetComponent<BoxCollider2D>().enabled = false;
+    }
+
     public void HideLeafs()
     {
         isTaken = true;
         animator.SetBool("Cut", true);
-        GetComponent<BoxCollider2D>().enabled = false;
     }
 
     public void ShowLeafs()
