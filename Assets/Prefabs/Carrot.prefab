@@ -147,6 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpAreaSize: 0.6
+  minVelocityToStillHurt: 0.1
   damage: 1
   carrotXVelocity: 10
   carrotStartingForce: {x: 10, y: 1}

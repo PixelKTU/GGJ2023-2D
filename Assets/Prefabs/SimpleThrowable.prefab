@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpAreaSize: 0.6
+  minVelocityToStillHurt: 0.1
   damage: 1
   stunSize: 0.3
   knowbackForce: 5

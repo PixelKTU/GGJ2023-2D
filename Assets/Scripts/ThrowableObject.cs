@@ -7,6 +7,7 @@ public class ThrowableObject : MonoBehaviour
     protected GameObject player;
     public GameObject prefab { get; private set; }
     [SerializeField] protected float jumpAreaSize;
+    [SerializeField] private float minVelocityToStillHurt;
 
     protected bool onGround = false;
     protected bool thrown = false;
@@ -72,7 +73,7 @@ public class ThrowableObject : MonoBehaviour
         if (thrown)
         {
             Rigidbody2D rigid = gameObject.GetComponent<Rigidbody2D>();
-            if (rigid.velocity.x * rigid.velocity.x + rigid.velocity.y * rigid.velocity.y == 0)
+            if (rigid.velocity.x * rigid.velocity.x + rigid.velocity.y * rigid.velocity.y <= minVelocityToStillHurt * minVelocityToStillHurt)
             {
                 onGround = true;
             }

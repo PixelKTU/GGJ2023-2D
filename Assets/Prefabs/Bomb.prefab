@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpAreaSize: 0.62
+  minVelocityToStillHurt: 0.1
   timeUntilExplosion: 2
   explosionRadius: 2
   maxExplosionForce: 20
