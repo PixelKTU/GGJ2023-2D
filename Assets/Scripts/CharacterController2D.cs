@@ -8,7 +8,7 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] KeyCode rightKey;
     [SerializeField] KeyCode jumpKey;
 
-    CapsuleCollider2D mainCollider;
+    BoxCollider2D mainCollider;
     Rigidbody2D rb;
     public Animator animator;
 
@@ -16,22 +16,33 @@ public class CharacterController2D : MonoBehaviour
     public float horizontalDrag;
     public float jumpStrength = 8;
     public float moveSpeed;
-    private float jumpTimeCounter;
-    public float jumpTime = 0.5f;
-    private bool isJumping;
+    //private float jumpTimeCounter;
     private float startingSizeX;
     public float gravityScale = 5;
     public AudioSource jump;
 
+    [SerializeField] float jumpCooldownTimeInSeconds = 0.1f;
+    [SerializeField] float fallSpeed;
+
+    [Header("Movement assist settings")]
+    [SerializeField] float CoyoteTimeInSeconds = 0.1f;
+    [SerializeField] float JumpBufferInSeconds = 0.1f;
+
+
     private float stunned = 0;
     [HideInInspector] public bool canMove = true;
+
+    private float jumpBufferTime = 0;
+    private float coyoteTime = 0;
+    private float jumpCooldown = 0;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        mainCollider = GetComponent<CapsuleCollider2D>();
+        mainCollider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
         startingSizeX = transform.localScale.x;
         rb.gravityScale = gravityScale;
@@ -42,21 +53,58 @@ public class CharacterController2D : MonoBehaviour
         stunned = duration;
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        mainCollider = GetComponent<BoxCollider2D>();
+
+        Bounds colliderBounds = mainCollider.bounds;
+        Vector3 colliderSize = new Vector3(mainCollider.size.x* 0.9f * Mathf.Abs(transform.localScale.x), 0.1f,1);
+        Vector3 groundCheckPos = colliderBounds.min + new Vector3(colliderBounds.size.x * 0.5f, colliderSize.y * 0.45f, 0);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(groundCheckPos, colliderSize);
+
+        Gizmos.color = Color.blue;
+        float grav = Physics2D.gravity.y;
+
+        float t = -jumpStrength / grav;
+        float yPos = transform.position.y + jumpStrength * t + (grav * t * t) / 2;
+
+        Gizmos.DrawRay(new Vector2(transform.position.x, yPos), Vector2.right);
+    }
+
     // Update is called once per frame
     void Update()
     {
+        // coyote time and jump buffer time update
+        if (coyoteTime > 0) coyoteTime -= Time.deltaTime;
+        if (jumpBufferTime > 0) jumpBufferTime -= Time.deltaTime;
+
+        // jump cooldown time update 
+        if (jumpCooldown > 0) jumpCooldown -= Time.deltaTime;
+
         //isGrounded patikrina
         Bounds colliderBounds = mainCollider.bounds;
-        float colliderRadius = mainCollider.size.x * 0.4f * Mathf.Abs(transform.localScale.x);
-        Vector3 groundCheckPos = colliderBounds.min + new Vector3(colliderBounds.size.x * 0.5f, colliderRadius * 0.9f, 0);
+        Vector3 colliderSize = new Vector3(mainCollider.size.x * 0.9f * Mathf.Abs(transform.localScale.x), 0.1f, 1);
+        Vector3 groundCheckPos = colliderBounds.min + new Vector3(colliderBounds.size.x * 0.5f, colliderSize.y * 0.45f, 0);
         // Check if player is grounded
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheckPos, colliderRadius, 1152);
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(groundCheckPos, colliderSize, 0, 1152);
+
         //Check if any of the overlapping colliders are not player collider, if so, set isGrounded to true
-        isGrounded = (colliders.Length > 0);
+        isGrounded = false;
+        if (colliders.Length > 0 && rb.velocity.y < 0.05f)
+        {
+            coyoteTime = CoyoteTimeInSeconds;
+            isGrounded = true;
+
+            
+        }
+   
         if (stunned > 0)
         {
             stunned = Mathf.Max(0, stunned - Time.deltaTime);
         }
+
         //atsakingas uz vaiksciojima
         if (canMove && stunned == 0)
         {
@@ -89,21 +137,34 @@ public class CharacterController2D : MonoBehaviour
                 rb.velocity = new Vector2(playerVelocity, rb.velocity.y);
             }
 
-            //atsakingas uz sokinejima
-            if (Input.GetKeyDown(jumpKey) && isGrounded == true)
+            if (jumpCooldown <= 0)
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
-                jumpTimeCounter = jumpTime;
-                isJumping = true;
-                jump.Play();
+                if (Input.GetKeyDown(jumpKey))
+                {
+                    jumpBufferTime = JumpBufferInSeconds;
+                }
 
-            }
-            if (Input.GetKeyUp(jumpKey))
-            {
+                //atsakingas uz sokinejima
+                if ((Input.GetKeyDown(jumpKey) || jumpBufferTime > 0) && (isGrounded == true || coyoteTime > 0))
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
+                    //jumpTimeCounter = jumpTime;
+                    
+                    jump.Play();
 
-                isJumping = false;
+                    jumpCooldown = jumpCooldownTimeInSeconds;
+                    jumpBufferTime = 0;
+                }
             }
+            //if (Input.GetKeyUp(jumpKey))
+           // {
+                //Debug.Log("pavyko");
+                
+          //  }
         }
+
+        
+
         //atsakingas uz animacija
         if (animator != null)
         {

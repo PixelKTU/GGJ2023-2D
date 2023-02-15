@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5748888952331163773}
   - component: {fileID: 5748888952331163771}
-  - component: {fileID: 5748888952331163768}
   - component: {fileID: 5748888952331163769}
   - component: {fileID: 5748888952331163774}
   - component: {fileID: 5748888952331163775}
@@ -18,6 +17,7 @@ GameObject:
   - component: {fileID: 5748888952331163770}
   - component: {fileID: 950807546}
   - component: {fileID: 950807547}
+  - component: {fileID: 5648563856523573882}
   m_Layer: 8
   m_Name: Player2
   m_TagString: Player
@@ -39,7 +39,7 @@ Transform:
   m_Children:
   - {fileID: 5748888953075613269}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5748888952331163771
 SpriteRenderer:
@@ -93,41 +93,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &5748888952331163768
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5748888952331163762}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.005777478}
-  m_Size: {x: 1.1365379, y: 1.5984452}
-  m_Direction: 0
 --- !u!114 &5748888952331163769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,11 +110,14 @@ MonoBehaviour:
   jumpKey: 273
   animator: {fileID: 5748888952331163770}
   horizontalDrag: 50
-  jumpStrength: 20
+  jumpStrength: 21
   moveSpeed: 7
-  jumpTime: 0.3
   gravityScale: 5
   jump: {fileID: 950807546}
+  jumpCooldownTimeInSeconds: 0.1
+  fallSpeed: 0
+  CoyoteTimeInSeconds: 0.075
+  JumpBufferInSeconds: 0.1
   canMove: 1
 --- !u!114 &5748888952331163774
 MonoBehaviour:
@@ -169,7 +137,10 @@ MonoBehaviour:
   ThrowForce: {x: 15, y: 2}
   PickedObjectSpot: {fileID: 5748888953075613258}
   picking: {fileID: 950807547}
+  throwSound: {fileID: 0}
   animator: {fileID: 0}
+  currentHolding: 0
+  previousHolding: 0
 --- !u!114 &5748888952331163775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,6 +156,8 @@ MonoBehaviour:
   maxHealth: 3
   playerNumber: 2
   currHealth: 0
+  death: {fileID: 0}
+  hit: {fileID: 0}
   dead: 0
   ghostYSpeed: 1
 --- !u!50 &5748888952331163772
@@ -204,12 +177,6 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 6321b2010188e034291d86b260bf07b4, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -426,6 +393,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!61 &5648563856523573882
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5748888952331163762}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.043111086, y: -0.015154958}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.6, y: 1.6}
+    newSize: {x: 1.6, y: 1.6}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.81074095, y: 1.5284638}
+  m_EdgeRadius: 0
 --- !u!1 &5748888953075613258
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,5 +448,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5748888952331163773}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
