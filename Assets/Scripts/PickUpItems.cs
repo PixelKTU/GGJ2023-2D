@@ -19,30 +19,11 @@ public class PickUpItems : MonoBehaviour
 
     public Animator animator;
     public bool currentHolding = false;
-    public bool previousHolding= false;
+    public bool previousHolding = false;
 
     PlayerHealth health;
 
 
-    T CopyComponent<T>(T original, GameObject destination) where T : Component
-    {
-        System.Type type = original.GetType();
-        var dst = destination.GetComponent(type) as T;
-        if (!dst) dst = destination.AddComponent(type) as T;
-        var fields = type.GetFields();
-        foreach (var field in fields)
-        {
-            if (field.IsStatic) continue;
-            field.SetValue(dst, field.GetValue(original));
-        }
-        var props = type.GetProperties();
-        foreach (var prop in props)
-        {
-            if (!prop.CanWrite || !prop.CanWrite || prop.Name == "name") continue;
-            prop.SetValue(dst, prop.GetValue(original, null), null);
-        }
-        return dst as T;
-    }
 
     private void OnDrawGizmos()
     {
@@ -84,7 +65,7 @@ public class PickUpItems : MonoBehaviour
             else
             {
                 ThrowableObject throwobj = _pickedObject.GetComponent<ThrowableObject>();
-                CopyComponent<Rigidbody2D>(throwobj.prefab.GetComponent<Rigidbody2D>(), _pickedObject);
+                _pickedObject.GetComponent<Rigidbody2D>().simulated = true;
 
                 if (gameObject.transform.localScale.x > 0)
                 {
@@ -106,9 +87,9 @@ public class PickUpItems : MonoBehaviour
                 GameObject prefab = _pickingGrass.GetComponent<PickableGrass>().containedObject;
                 _pickedObject = Instantiate(prefab, PickedObjectSpot.transform);
                 _pickedObject.layer = 9;
-                Destroy(_pickedObject.GetComponent<Rigidbody2D>());
+                _pickedObject.GetComponent<Rigidbody2D>().simulated = false;
                 _pickedObject.transform.localPosition = Vector3.zero;
-                _pickedObject.GetComponent<ThrowableObject>().Created(gameObject,prefab);
+                _pickedObject.GetComponent<ThrowableObject>().Created(gameObject, prefab);
                 gameObject.GetComponent<CharacterController2D>().canMove = true;
                 _pulling = false;
                 //Destroy(_pickingGrass);
@@ -119,27 +100,27 @@ public class PickUpItems : MonoBehaviour
                 }
             }
         }
-        
+
         if (animator != null)
         {
-            
+
             if (_pickedObject != null)
             {
                 animator.SetBool("holdingItem", true);
-                
+
             }
             else
             {
                 animator.SetBool("holdingItem", false);
             }
         }
-        
-        if(_pickedObject!=null&&soundCanBePlayed==true)
+
+        if (_pickedObject != null && soundCanBePlayed == true)
         {
             picking.Play();
             soundCanBePlayed = false;
         }
-        if(_pickedObject==null)
+        if (_pickedObject == null)
         {
             soundCanBePlayed = true;
         }
@@ -150,11 +131,11 @@ public class PickUpItems : MonoBehaviour
         }
         else if (_pickedObject != null)
         {
-            currentHolding= true;
+            currentHolding = true;
         }
-        if(currentHolding==false&&previousHolding==true)
+        if (currentHolding == false && previousHolding == true)
         {
-           throwSound.Play();
+            throwSound.Play();
         }
 
     }
@@ -166,11 +147,11 @@ public class PickUpItems : MonoBehaviour
             _pickedObject = item;
             item.layer = 9;
             item.GetComponent<ThrowableObject>().WhenPickedUp();
-            Destroy(_pickedObject.GetComponent<Rigidbody2D>());
+            _pickedObject.GetComponent<Rigidbody2D>().simulated = false;
             _pickedObject.transform.parent = PickedObjectSpot.transform;
             _pickedObject.transform.localPosition = Vector3.zero;
             ThrowableObject throwobj = _pickedObject.GetComponent<ThrowableObject>();
-            throwobj.Created(gameObject,throwobj.prefab);
+            throwobj.Created(gameObject, throwobj.prefab);
         }
     }
 

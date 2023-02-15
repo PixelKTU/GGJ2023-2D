@@ -35,18 +35,19 @@ public class ThrowableObject : MonoBehaviour
         thrown = true;
     }
 
-    public virtual void WhenPickedUp() {
+    public virtual void WhenPickedUp()
+    {
         onGround = false;
         thrown = false;
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player" && thrown)
+        if (collision.gameObject.tag == "Player" && thrown)
         {
             Vector2 colliderUpPos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + GetComponent<Collider2D>().bounds.extents.y + 0.1f);
             RaycastHit2D hit = Physics2D.Linecast(new Vector2(colliderUpPos.x - jumpAreaSize / 2, colliderUpPos.y), new Vector2(colliderUpPos.x + jumpAreaSize / 2, colliderUpPos.y), 256);
-            if(hit)
+            if (hit)
             {
                 hit.transform.gameObject.GetComponent<PickUpItems>().PickUpExistingItem(gameObject);
             }

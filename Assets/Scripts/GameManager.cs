@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,7 +24,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
     }
 
     private void Start()
@@ -36,10 +34,6 @@ public class GameManager : MonoBehaviour
         {
             grass.containedObject = GetRandomThrowable();
         }
-    }
-    private void OnDestroy()
-    {
-        SceneManager.activeSceneChanged -= SceneManager_activeSceneChanged;
     }
 
     public GameObject GetRandomThrowable()
@@ -73,16 +67,16 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("player 2 won");
                 player2Controller.enabled = false;
-                player2Controller.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 player2Controller.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                player2Controller.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 winner = "Rat";
             }
             else if (playerNumber == 2)
             {
                 Debug.Log("player 1 won");
                 player1Controller.enabled = false;
-                player1Controller.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 player1Controller.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                player1Controller.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 winner = "Cat";
             }
             else
@@ -99,10 +93,5 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(timeUntilWinUi);
         winnerScreen.GetComponent<Animator>().SetTrigger("GameEnd");
-    }
-
-    private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
-    {
-        //CameraScaling.instance.UpdateCameraScale();
     }
 }
