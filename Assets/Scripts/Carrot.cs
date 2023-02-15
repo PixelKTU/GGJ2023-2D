@@ -63,7 +63,7 @@ public class Carrot : ThrowableObject
                     flying = true;
                     rigid.gravityScale = 0;
                 }
-                rigid.AddForce(new Vector2(carrotXVelocity, 0));
+                rigid.AddForce(new Vector2(carrotXVelocity*Time.deltaTime, 0));
                 rigid.velocity = new Vector2(rigid.velocity.x, 0);
             }
             else

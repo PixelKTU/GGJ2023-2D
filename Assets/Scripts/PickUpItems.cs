@@ -9,6 +9,8 @@ public class PickUpItems : MonoBehaviour
     [SerializeField] float PullingTime;
     [SerializeField] Vector2 ThrowForce;
     [SerializeField] GameObject PickedObjectSpot;
+
+    private BoxCollider2D PickedObjectSpotCollider;
     bool _pulling = false;
     float _pullingTime;
     GameObject _pickedObject = null;
@@ -34,6 +36,7 @@ public class PickUpItems : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         health = GetComponent<PlayerHealth>();
+        PickedObjectSpotCollider = PickedObjectSpot.GetComponent<BoxCollider2D>();
     }
 
     private void Update()
@@ -67,6 +70,8 @@ public class PickUpItems : MonoBehaviour
                 ThrowableObject throwobj = _pickedObject.GetComponent<ThrowableObject>();
                 _pickedObject.GetComponent<Rigidbody2D>().simulated = true;
 
+                PickedObjectSpotCollider.enabled = false;
+
                 if (gameObject.transform.localScale.x > 0)
                 {
                     throwobj.Throw(ThrowForce);
@@ -88,6 +93,10 @@ public class PickUpItems : MonoBehaviour
                 _pickedObject = Instantiate(prefab, PickedObjectSpot.transform);
                 _pickedObject.layer = 9;
                 _pickedObject.GetComponent<Rigidbody2D>().simulated = false;
+
+                PickedObjectSpotCollider.enabled = true;
+                PickedObjectSpotCollider.size = _pickedObject.GetComponent<BoxCollider2D>().size;
+
                 _pickedObject.transform.localPosition = Vector3.zero;
                 _pickedObject.GetComponent<ThrowableObject>().Created(gameObject, prefab);
                 gameObject.GetComponent<CharacterController2D>().canMove = true;
@@ -113,6 +122,16 @@ public class PickUpItems : MonoBehaviour
             {
                 animator.SetBool("holdingItem", false);
             }
+        }
+
+        if (_pickedObject == null && PickedObjectSpotCollider.enabled)
+        {
+            PickedObjectSpotCollider.enabled = false;
+        }
+        if (_pickedObject != null && !PickedObjectSpotCollider.enabled)
+        {
+            PickedObjectSpotCollider.enabled = true;
+            PickedObjectSpotCollider.size = _pickedObject.GetComponent<BoxCollider2D>().size;
         }
 
         if (_pickedObject != null && soundCanBePlayed == true)
@@ -148,6 +167,10 @@ public class PickUpItems : MonoBehaviour
             item.layer = 9;
             item.GetComponent<ThrowableObject>().WhenPickedUp();
             _pickedObject.GetComponent<Rigidbody2D>().simulated = false;
+
+            PickedObjectSpotCollider.enabled = true;
+            PickedObjectSpotCollider.size = _pickedObject.GetComponent<BoxCollider2D>().size;
+
             _pickedObject.transform.parent = PickedObjectSpot.transform;
             _pickedObject.transform.localPosition = Vector3.zero;
             ThrowableObject throwobj = _pickedObject.GetComponent<ThrowableObject>();
@@ -157,7 +180,11 @@ public class PickUpItems : MonoBehaviour
 
     public void ItemRemovedFromHands()
     {
+
+        _pickedObject.transform.parent = null;
         _pickedObject = null;
+
+        PickedObjectSpotCollider.enabled = false;
     }
 
     public void DeleteItemFromHands()
@@ -166,6 +193,7 @@ public class PickUpItems : MonoBehaviour
         {
             Destroy(_pickedObject);
             _pickedObject = null;
+            PickedObjectSpotCollider.enabled = false;
         }
     }
 
