@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,30 +16,35 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI player1Health, player2Health;
     public TextMeshProUGUI winnerTitle;
     public GameObject winnerScreen;
-    [SerializeField] float timeUntilWinUi;
 
-    List<PickableGrass> grassList;
+    [SerializeField] private float timeUntilWinUi;
 
+    private List<PickableGrass> grassList;
     private int _winner;
 
     private void Awake()
     {
         instance = this;
+        SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
     }
 
     private void Start()
     {
         grassList = FindObjectsOfType<PickableGrass>().ToList<PickableGrass>();
         _winner = -1;
-        foreach(PickableGrass grass in grassList)
+        foreach (PickableGrass grass in grassList)
         {
             grass.containedObject = GetRandomThrowable();
         }
     }
+    private void OnDestroy()
+    {
+        SceneManager.activeSceneChanged -= SceneManager_activeSceneChanged;
+    }
 
     public GameObject GetRandomThrowable()
     {
-        return throwables[Random.Range(0,throwables.Count)];
+        return throwables[Random.Range(0, throwables.Count)];
     }
 
     public void UpdateHealthUI(int playerNumber, int health)
@@ -93,5 +99,10 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(timeUntilWinUi);
         winnerScreen.GetComponent<Animator>().SetTrigger("GameEnd");
+    }
+
+    private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
+    {
+        //CameraScaling.instance.UpdateCameraScale();
     }
 }
