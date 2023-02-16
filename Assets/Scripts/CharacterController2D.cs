@@ -22,11 +22,17 @@ public class CharacterController2D : MonoBehaviour
     public AudioSource jump;
 
     [SerializeField] float jumpCooldownTimeInSeconds = 0.1f;
-    [SerializeField] float fallSpeed;
 
     [Header("Movement assist settings")]
     [SerializeField] float CoyoteTimeInSeconds = 0.1f;
     [SerializeField] float JumpBufferInSeconds = 0.1f;
+
+    [Header("Better jump")]
+    [SerializeField] bool enableBetterJump = true;
+
+    [SerializeField] float additionalLowJumpGravMultiplier = 0;
+    [SerializeField] float additionalFallGravMultiplier = 0;
+    [SerializeField] float maxVerticalSpeed;
 
 
     private float stunned = 0;
@@ -36,7 +42,7 @@ public class CharacterController2D : MonoBehaviour
     private float coyoteTime = 0;
     private float jumpCooldown = 0;
 
-
+    private bool isJumping = false;
 
     // Start is called before the first frame update
     void Start()
@@ -151,19 +157,31 @@ public class CharacterController2D : MonoBehaviour
                     //jumpTimeCounter = jumpTime;
                     
                     jump.Play();
+                    isJumping = true;
 
                     jumpCooldown = jumpCooldownTimeInSeconds;
                     jumpBufferTime = 0;
                 }
             }
-            //if (Input.GetKeyUp(jumpKey))
-           // {
+            if (Input.GetKeyUp(jumpKey))
+            {
                 //Debug.Log("pavyko");
-                
-          //  }
+                isJumping = false;
+            }
         }
 
-        
+        if (enableBetterJump)
+        {
+            if (rb.velocity.y < 0)
+            {
+                rb.velocity += Vector2.up * Physics2D.gravity.y * (additionalFallGravMultiplier - 1) * Time.deltaTime;
+            }
+            else if (rb.velocity.y > 0 && !isJumping)
+            {
+                rb.velocity += Vector2.up * Physics2D.gravity.y * (additionalLowJumpGravMultiplier - 1) * Time.deltaTime;
+            }
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Sign(rb.velocity.y) * Mathf.Min(Mathf.Abs(rb.velocity.y), maxVerticalSpeed));
+        }
 
         //atsakingas uz animacija
         if (animator != null)
