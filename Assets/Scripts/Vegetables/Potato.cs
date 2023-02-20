@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bomb : ThrowableObject
+public class Potato : ThrowableObject
 {
     [SerializeField] float timeUntilExplosion;
     [SerializeField] float explosionRadius;

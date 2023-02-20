@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1082769620}
   - component: {fileID: 3175171045548400310}
   m_Layer: 10
-  m_Name: Bomb
+  m_Name: Potato
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -115,7 +115,7 @@ MonoBehaviour:
   gravityScale: 5
   jump: {fileID: 1861515876}
   jumpCooldownTimeInSeconds: 0.1
-  CoyoteTimeInSeconds: 0.075
+  CoyoteTimeInSeconds: 0.09
   JumpBufferInSeconds: 0.1
   enableBetterJump: 1
   additionalLowJumpGravMultiplier: 10

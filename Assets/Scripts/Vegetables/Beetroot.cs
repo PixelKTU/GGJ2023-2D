@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Potato : ThrowableObject
+public class Beetroot : ThrowableObject
 {
     [SerializeField] int damage;
     [SerializeField] float stunSize;
