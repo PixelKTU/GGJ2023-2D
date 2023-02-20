@@ -9,8 +9,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public List<GameObject> throwables;
-
     public CharacterController2D player1Controller, player2Controller;
     public TextMeshProUGUI player1Health, player2Health;
     public TextMeshProUGUI winnerTitle;
@@ -18,7 +16,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float timeUntilWinUi;
 
-    private List<PickableGrass> grassList;
+    //private List<PickableGrass> grassList;
     private int _winner;
 
     private void Awake()
@@ -28,18 +26,15 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        grassList = FindObjectsOfType<PickableGrass>().ToList<PickableGrass>();
+        //grassList = FindObjectsOfType<PickableGrass>().ToList<PickableGrass>();
         _winner = -1;
-        foreach (PickableGrass grass in grassList)
-        {
-            grass.containedObject = GetRandomThrowable();
-        }
+        //foreach (PickableGrass grass in grassList)
+       // {
+         //   grass.containedObject = GetRandomThrowable();
+       // }
     }
 
-    public GameObject GetRandomThrowable()
-    {
-        return throwables[Random.Range(0, throwables.Count)];
-    }
+    
 
     public void UpdateHealthUI(int playerNumber, int health)
     {

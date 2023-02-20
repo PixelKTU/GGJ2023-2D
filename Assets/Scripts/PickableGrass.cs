@@ -11,6 +11,9 @@ public class PickableGrass : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Animator animator;
 
+    [SerializeField]
+    List<VegetableSpawnData> vegetableRandomWeights = new List<VegetableSpawnData>();
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -19,6 +22,7 @@ public class PickableGrass : MonoBehaviour
         animator = GetComponent<Animator>();
         animator.Play("Idle", 0, Random.Range(0,animator.GetCurrentAnimatorStateInfo(0).length));
         GenerateTime();
+        containedObject = GetRandomThrowable(vegetableRandomWeights);
     }
 
     private void Update()
@@ -50,9 +54,30 @@ public class PickableGrass : MonoBehaviour
         animator.SetBool("Cut", true);
     }
 
+    public GameObject GetRandomThrowable(List<VegetableSpawnData> vegetables)
+    {
+        float sum = 0;
+        foreach (var val in vegetables) sum += val.SpawnWeight;
+
+        float randVal = Random.Range(0, sum);
+
+        int index = 0;
+
+        for (int i = 0; i < vegetables.Count; i++)
+        {
+            randVal -= vegetables[i].SpawnWeight;
+            if (randVal < Mathf.Epsilon)
+            {
+                break;
+            }
+            index++;
+        }
+        return vegetables[Mathf.Min(Mathf.Max(index, 0), vegetables.Count - 1)].vegetablePrefab;
+    }
+
     public void ShowLeafs()
     {
-        containedObject = GameManager.instance.GetRandomThrowable();
+        containedObject = GetRandomThrowable(vegetableRandomWeights);
         isTaken = false;
         animator.SetBool("Growing", false);
         GetComponent<BoxCollider2D>().enabled = true;
