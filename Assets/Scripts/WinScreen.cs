@@ -5,6 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class WinScreen : MonoBehaviour
 {
+    private bool canNextMatch = false;
+
+
+    public void EnableNextMatch()
+    {
+        canNextMatch = true;
+    }
     public void NextMatch()
     {
         SceneManager.LoadScene(GetRandomArena());
@@ -18,5 +25,14 @@ public class WinScreen : MonoBehaviour
     int GetRandomArena()
     {
         return Random.Range(1, 4);
+    }
+
+    private void Update()
+    {
+        if (canNextMatch && Input.GetKeyDown(KeyCode.Space)) // Change when more inputs are added
+        {
+            canNextMatch = false;
+            NextMatch();
+        }
     }
 }

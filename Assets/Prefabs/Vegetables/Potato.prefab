@@ -126,8 +126,8 @@ MonoBehaviour:
   minVelocityToStillHurt: 0.1
   timeUntilExplosion: 2
   explosionRadius: 2
-  maxExplosionForce: 20
-  stunDuration: 1
+  maxExplosionForce: 18
+  stunDuration: 0.5
   explosionDamage: 1
 --- !u!61 &5607338098199997931
 BoxCollider2D:
