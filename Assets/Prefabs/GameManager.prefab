@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6918789868577525927}
   - component: {fileID: 6918789868577525976}
   - component: {fileID: 4258820870648776346}
+  - component: {fileID: 9093307999167982540}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -45,17 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf3acb9dd4d9fe4da3c9d42e7bdd8ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwables:
-  - {fileID: 3144010623307302740, guid: e0fbf75bd7e52534abbf3203eef36149, type: 3}
-  - {fileID: 111755678909992949, guid: 1206804b77bd1924180ea3896e7da9df, type: 3}
-  - {fileID: 5290035481663461847, guid: b3897d8796d93b64bb407bcdfda945e5, type: 3}
   player1Controller: {fileID: 0}
   player2Controller: {fileID: 0}
-  player1Health: {fileID: 0}
-  player2Health: {fileID: 0}
-  winnerTitle: {fileID: 0}
-  winnerScreen: {fileID: 0}
-  timeUntilWinUi: 0
 --- !u!114 &4258820870648776346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,3 +62,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
   audioSourceOneShot: {fileID: 1132614487589763002, guid: b926a768b40f2824da7e28a046acf13e, type: 3}
+--- !u!114 &9093307999167982540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6918789868577525926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de124aab82adcf469bfc8e5d85ac6f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 4379923108720147238, guid: 0b388793873b46744856a2c2699122cf, type: 3}
+  playerCount: 2
+  playerSkins:
+  - {fileID: 11400000, guid: f8e63aee8b35e7240b5d72f4ae92fad2, type: 2}
+  - {fileID: 11400000, guid: e99ec29e80c8eec4699b9605d54be9d3, type: 2}

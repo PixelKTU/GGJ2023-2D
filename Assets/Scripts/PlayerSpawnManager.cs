@@ -9,6 +9,8 @@ public class PlayerSpawnManager : MonoBehaviour
     [SerializeField] GameObject playerPrefab;
     [SerializeField] int playerCount;
 
+    [SerializeField] List<PlayerSkinData> playerSkins = new List<PlayerSkinData>();
+
     void Awake()
     {
         if (Instance == null)
@@ -27,9 +29,11 @@ public class PlayerSpawnManager : MonoBehaviour
         spawnPositions.Add(pos);
     }
 
-    void SpawnOnePlayer(Vector2 position)
+    void SpawnOnePlayer(Vector2 position, int playerIndex)
     {
         GameObject obj = Instantiate(playerPrefab, position, Quaternion.identity);
+        CharacterController2D playControl = obj.GetComponent<CharacterController2D>();
+        playControl.OnCreatePlayer("Horizontal" + playerIndex, "Vertical" + playerIndex, playerSkins[playerIndex]);
     }
 
     void SpawnPlayers(int playCount)
@@ -49,7 +53,7 @@ public class PlayerSpawnManager : MonoBehaviour
                 pos = tempList[index];
                 tempList.RemoveAt(index);
             }
-            SpawnOnePlayer(pos);
+            SpawnOnePlayer(pos,i);
         }
     }
 

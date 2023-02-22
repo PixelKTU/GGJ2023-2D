@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class CharacterController2D : MonoBehaviour
 {
-    [SerializeField] KeyCode leftKey;
-    [SerializeField] KeyCode rightKey;
-    [SerializeField] KeyCode jumpKey;
+   // [SerializeField] KeyCode leftKey;
+   // [SerializeField] KeyCode rightKey;
+  //  [SerializeField] KeyCode jumpKey;
+
+    private string horizontalAxis;
+    private string verticalAxis;
 
     BoxCollider2D mainCollider;
     Rigidbody2D rb;
@@ -44,6 +47,8 @@ public class CharacterController2D : MonoBehaviour
 
     private bool isJumping = false;
 
+    private PlayerSkinData playerSkinData;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +62,14 @@ public class CharacterController2D : MonoBehaviour
     public void Stun(float duration)
     {
         stunned = duration;
+    }
+
+    public void OnCreatePlayer(string horizontalAxis, string verticalAxis, PlayerSkinData playerSkinData)
+    {
+        this.horizontalAxis = horizontalAxis;
+        this.verticalAxis = verticalAxis;
+        gameObject.GetComponent<Animator>().runtimeAnimatorController = playerSkinData.animations;
+        this.playerSkinData = playerSkinData;
     }
 
     private void OnDrawGizmosSelected()
@@ -79,6 +92,10 @@ public class CharacterController2D : MonoBehaviour
         Gizmos.DrawRay(new Vector2(transform.position.x, yPos), Vector2.right);
     }
 
+    [HideInInspector]
+    public bool grabbing = false;
+
+    float lastVerticalVal = 0;
     // Update is called once per frame
     void Update()
     {
@@ -111,17 +128,22 @@ public class CharacterController2D : MonoBehaviour
             stunned = Mathf.Max(0, stunned - Time.deltaTime);
         }
 
+        float verticalVal = Input.GetAxisRaw(verticalAxis);
+        float horizontalVal = Input.GetAxisRaw(horizontalAxis);
+        grabbing = verticalVal < 0;
+
         //atsakingas uz vaiksciojima
         if (canMove && stunned == 0)
         {
 
             float playerVelocity = 0;
-            if (Input.GetKey(leftKey))
+            
+            if (horizontalVal < 0)
             {
                 transform.localScale = new Vector3(-startingSizeX, transform.localScale.y, transform.localScale.z); // flip sprite to the left
                 playerVelocity -= moveSpeed;
             }
-            if (Input.GetKey(rightKey))
+            if (horizontalVal > 0)
             {
                 transform.localScale = new Vector3(startingSizeX, transform.localScale.y, transform.localScale.z); // flip sprite to the right
                 playerVelocity += moveSpeed;
@@ -145,13 +167,13 @@ public class CharacterController2D : MonoBehaviour
 
             if (jumpCooldown <= 0)
             {
-                if (Input.GetKeyDown(jumpKey))
+                if (verticalVal > 0 && lastVerticalVal == 0)
                 {
                     jumpBufferTime = JumpBufferInSeconds;
                 }
 
                 //atsakingas uz sokinejima
-                if ((Input.GetKeyDown(jumpKey) || jumpBufferTime > 0) && (isGrounded == true || coyoteTime > 0))
+                if (((verticalVal > 0 && lastVerticalVal == 0) || jumpBufferTime > 0) && (isGrounded == true || coyoteTime > 0))
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
                     //jumpTimeCounter = jumpTime;
@@ -163,7 +185,7 @@ public class CharacterController2D : MonoBehaviour
                     jumpBufferTime = 0;
                 }
             }
-            if (Input.GetKeyUp(jumpKey))
+            if (verticalVal <= 0)
             {
                 //Debug.Log("pavyko");
                 isJumping = false;
@@ -182,6 +204,7 @@ public class CharacterController2D : MonoBehaviour
             }
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Sign(rb.velocity.y) * Mathf.Min(Mathf.Abs(rb.velocity.y), maxVerticalSpeed));
         }
+        lastVerticalVal = verticalVal;
 
         //atsakingas uz animacija
         if (animator != null)

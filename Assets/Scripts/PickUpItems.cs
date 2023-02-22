@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PickUpItems : MonoBehaviour
 {
-    [SerializeField] KeyCode DownButton;
+    //[SerializeField] KeyCode DownButton;
     [SerializeField] float MaxDistanceToVegetable;
     [SerializeField] float PullingTime;
     [SerializeField] Vector2 ThrowForce;
@@ -32,16 +32,19 @@ public class PickUpItems : MonoBehaviour
         Bounds colliderBounds = GetComponent<Collider2D>().bounds;
         Gizmos.DrawWireSphere(colliderBounds.min + new Vector3(colliderBounds.extents.x, 0, 0), MaxDistanceToVegetable);
     }
+    CharacterController2D controller2D;
     void Start()
     {
         animator = GetComponent<Animator>();
         health = GetComponent<PlayerHealth>();
         PickedObjectSpotCollider = PickedObjectSpot.GetComponent<BoxCollider2D>();
+        controller2D = gameObject.GetComponent<CharacterController2D>();
     }
 
+    bool lastFrameGrabbing = false;
     private void Update()
     {
-        if (!health.dead && Input.GetKeyDown(DownButton))
+        if (!health.dead && (controller2D.grabbing && !lastFrameGrabbing ))
         {
             if (_pickedObject == null)
             {
@@ -52,7 +55,7 @@ public class PickUpItems : MonoBehaviour
                 {
                     // code when started pulling
 
-                    gameObject.GetComponent<CharacterController2D>().canMove = false;
+                    controller2D.canMove = false;
                     gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
                     gameObject.transform.position = new Vector3(colliders[0].gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
                     _pickingGrass = colliders[0].gameObject;
@@ -83,6 +86,7 @@ public class PickUpItems : MonoBehaviour
                 _pickedObject = null;
             }
         }
+        lastFrameGrabbing = controller2D.grabbing;
         if (_pulling)
         {
             _pullingTime += Time.deltaTime;
@@ -99,7 +103,7 @@ public class PickUpItems : MonoBehaviour
 
                 _pickedObject.transform.localPosition = Vector3.zero;
                 _pickedObject.GetComponent<ThrowableObject>().Created(gameObject, prefab);
-                gameObject.GetComponent<CharacterController2D>().canMove = true;
+                controller2D.canMove = true;
                 _pulling = false;
                 //Destroy(_pickingGrass);
                 _pickingGrass.GetComponent<PickableGrass>().HideLeafs();
@@ -156,7 +160,7 @@ public class PickUpItems : MonoBehaviour
         {
             throwSound.Play();
         }
-
+        
     }
 
     public void PickUpExistingItem(GameObject item)
