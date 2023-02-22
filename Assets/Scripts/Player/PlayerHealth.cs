@@ -17,13 +17,13 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         currHealth = maxHealth;
-        GameManager.instance.UpdateHealthUI(playerNumber, currHealth);
+        GameUI.Instance.UpdateHealthUI(playerNumber, currHealth);
     }
 
     public void AddHealth(int amount)
     {
         currHealth += amount;
-        GameManager.instance.UpdateHealthUI(playerNumber, currHealth);
+        GameUI.Instance.UpdateHealthUI(playerNumber, currHealth);
     }
 
     public void RemoveHealth(int amount)
@@ -35,7 +35,7 @@ public class PlayerHealth : MonoBehaviour
             {
                 currHealth -= amount;
                 hit.Play();
-                GameManager.instance.UpdateHealthUI(playerNumber, currHealth);
+                GameUI.Instance.UpdateHealthUI(playerNumber, currHealth);
                 if (currHealth <= 0)
                 {
                     Die();
@@ -47,7 +47,7 @@ public class PlayerHealth : MonoBehaviour
     public void Die()
     {
         currHealth = 0;
-        GameManager.instance.UpdateHealthUI(playerNumber, currHealth);
+        GameUI.Instance.UpdateHealthUI(playerNumber, currHealth);
         GameManager.instance.PlayerDied(playerNumber);
         GetComponent<Animator>().SetBool("Death", true);
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;

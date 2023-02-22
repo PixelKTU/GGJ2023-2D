@@ -4,19 +4,15 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public Action<string> OnGameEnd;//player name
     public CharacterController2D player1Controller, player2Controller;
-    public TextMeshProUGUI player1Health, player2Health;
-    public TextMeshProUGUI winnerTitle;
-    public GameObject winnerScreen;
 
-    [SerializeField] private float timeUntilWinUi;
-
-    //private List<PickableGrass> grassList;
     private int _winner;
 
     private void Awake()
@@ -26,30 +22,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //grassList = FindObjectsOfType<PickableGrass>().ToList<PickableGrass>();
         _winner = -1;
-        //foreach (PickableGrass grass in grassList)
-       // {
-         //   grass.containedObject = GetRandomThrowable();
-       // }
-    }
-
-    
-
-    public void UpdateHealthUI(int playerNumber, int health)
-    {
-        if (playerNumber == 1)
-        {
-            player1Health.text = health.ToString();
-        }
-        else if (playerNumber == 2)
-        {
-            player2Health.text = health.ToString();
-        }
-        else
-        {
-            Debug.Log("Wrong player number");
-        }
     }
 
     public void PlayerDied(int playerNumber)
@@ -79,14 +52,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Wrong player number");
             }
 
-            winnerTitle.text = winner + " wins!";
-            StartCoroutine(WaitWinUi());
+            OnGameEnd?.Invoke(winner);
         }
-    }
-
-    IEnumerator WaitWinUi()
-    {
-        yield return new WaitForSeconds(timeUntilWinUi);
-        winnerScreen.GetComponent<Animator>().SetTrigger("GameEnd");
     }
 }
