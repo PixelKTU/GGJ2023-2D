@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6b7cd3c7a9db2247870612ea5ad1488, type: 3}
+  m_Name: Mouse
+  m_EditorClassIdentifier: 
+  playerHeadSprite: {fileID: 21300000, guid: f0af64d7a09fad74c895a56bd63c3e6e, type: 3}
+  maxHealth: 3
+  animations: {fileID: 22100000, guid: ed13628b17cd22a499340cc466079492, type: 2}
