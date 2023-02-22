@@ -44,8 +44,7 @@ public class PlayerUIStatus : MonoBehaviour
     {
         for (int i = 0; i < health; i++)
         {
-            GameObject heartObject = Instantiate(heartPrefab);
-            heartObject.transform.SetParent(heartHolder);
+            GameObject heartObject = Instantiate(heartPrefab, heartHolder);
             playerHearts.Add(heartObject);
         }
     }

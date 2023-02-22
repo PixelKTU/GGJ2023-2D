@@ -55,7 +55,7 @@ public class GameUI : MonoBehaviour
         PlayerUIStatus playerUIStatus = Instantiate(playerStatus, playerStatusHolder);
 
         playerUIStatuses.Add(playerUIStatus);
-        playerStatus.SetPlayer(character);
+        playerUIStatus.SetPlayer(character);
 
         if (playerUIStatuses.Count % 2 == 0)
         {
