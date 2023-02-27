@@ -4,35 +4,35 @@ using UnityEngine;
 
 public class PickUpItems : MonoBehaviour
 {
-    //[SerializeField] KeyCode DownButton;
-    [SerializeField] float MaxDistanceToVegetable;
-    [SerializeField] float PullingTime;
-    [SerializeField] Vector2 ThrowForce;
-    [SerializeField] GameObject PickedObjectSpot;
-
-    private BoxCollider2D PickedObjectSpotCollider;
-    bool _pulling = false;
-    float _pullingTime;
-    GameObject _pickedObject = null;
-    GameObject _pickingGrass = null;
-    public AudioSource picking;
-    public AudioSource throwSound;
-    bool soundCanBePlayed = true;
-
     public Animator animator;
     public bool currentHolding = false;
     public bool previousHolding = false;
 
-    PlayerHealth health;
+    //[SerializeField] KeyCode DownButton;
+    [SerializeField] private float MaxDistanceToVegetable;
+    [SerializeField] private float PullingTime;
+    [SerializeField] private Vector2 ThrowForce;
+    [SerializeField] private GameObject PickedObjectSpot;
 
+    [SerializeField] private AudioClip picking;
+    [SerializeField] private AudioClip throwSound;
 
+    private PlayerHealth health;
+    private BoxCollider2D PickedObjectSpotCollider;
+    private bool _pulling = false;
+    private float _pullingTime;
+    private GameObject _pickedObject = null;
+    private GameObject _pickingGrass = null;
+    private bool soundCanBePlayed = true;
+    private CharacterController2D controller2D;
+    private bool lastFrameGrabbing = false;
 
     private void OnDrawGizmos()
     {
         Bounds colliderBounds = GetComponent<Collider2D>().bounds;
         Gizmos.DrawWireSphere(colliderBounds.min + new Vector3(colliderBounds.extents.x, 0, 0), MaxDistanceToVegetable);
     }
-    CharacterController2D controller2D;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -41,10 +41,9 @@ public class PickUpItems : MonoBehaviour
         controller2D = gameObject.GetComponent<CharacterController2D>();
     }
 
-    bool lastFrameGrabbing = false;
     private void Update()
     {
-        if (!health.dead && (controller2D.grabbing && !lastFrameGrabbing ))
+        if (!health.dead && (controller2D.grabbing && !lastFrameGrabbing))
         {
             if (_pickedObject == null)
             {
@@ -62,6 +61,7 @@ public class PickUpItems : MonoBehaviour
                     _pickingGrass.GetComponent<PickableGrass>().StartPicking();
                     _pulling = true;
                     _pullingTime = 0;
+
                     if (animator != null)
                     {
                         animator.SetBool("isPulling", true);
@@ -86,7 +86,9 @@ public class PickUpItems : MonoBehaviour
                 _pickedObject = null;
             }
         }
+
         lastFrameGrabbing = controller2D.grabbing;
+
         if (_pulling)
         {
             _pullingTime += Time.deltaTime;
@@ -132,6 +134,7 @@ public class PickUpItems : MonoBehaviour
         {
             PickedObjectSpotCollider.enabled = false;
         }
+
         if (_pickedObject != null && !PickedObjectSpotCollider.enabled)
         {
             PickedObjectSpotCollider.enabled = true;
@@ -140,14 +143,17 @@ public class PickUpItems : MonoBehaviour
 
         if (_pickedObject != null && soundCanBePlayed == true)
         {
-            picking.Play();
+            SoundManager.Instance.PlaySoundOneShot(picking);
             soundCanBePlayed = false;
         }
+
         if (_pickedObject == null)
         {
             soundCanBePlayed = true;
         }
+
         previousHolding = currentHolding;
+
         if (_pickedObject == null)
         {
             currentHolding = false;
@@ -156,11 +162,12 @@ public class PickUpItems : MonoBehaviour
         {
             currentHolding = true;
         }
+
         if (currentHolding == false && previousHolding == true)
         {
-            throwSound.Play();
+            SoundManager.Instance.PlaySoundOneShot(throwSound);
         }
-        
+
     }
 
     public void PickUpExistingItem(GameObject item)

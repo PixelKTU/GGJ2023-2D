@@ -8,8 +8,8 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 3;
     public int playerNumber;
     public int currHealth;
-    public AudioSource death;
-    public AudioSource hit;
+    public AudioClip death;
+    public AudioClip hit;
 
     public bool dead = false;
     [SerializeField] float ghostYSpeed;
@@ -37,7 +37,7 @@ public class PlayerHealth : MonoBehaviour
             if (currHealth >= amount)
             {
                 currHealth -= amount;
-                hit.Play();
+                SoundManager.Instance.PlaySoundOneShot(hit);
                 GameUI.Instance.UpdateHealthUI(playerNumber, currHealth);
                 if (currHealth <= 0)
                 {
@@ -52,13 +52,14 @@ public class PlayerHealth : MonoBehaviour
     {
         currHealth = 0;
         GameUI.Instance.UpdateHealthUI(playerNumber, currHealth);
-        GameManager.instance.PlayerDied(playerNumber);
+        GameManager.instance.PlayerDied(GetComponent<CharacterController2D>());
+
         GetComponent<Animator>().SetBool("Death", true);
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         GetComponent<Collider2D>().enabled = false;
         GetComponent<CharacterController2D>().canMove = false;
         GetComponent<PickUpItems>().DeleteItemFromHands();
-        death.Play();
+        SoundManager.Instance.PlaySoundOneShot(death);
         dead = true;
     }
 

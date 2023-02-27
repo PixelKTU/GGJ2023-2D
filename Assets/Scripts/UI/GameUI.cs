@@ -22,20 +22,24 @@ public class GameUI : MonoBehaviour
         {
             Instance = this;
         }
+
+        PlayerSpawnManager.Instance.OnPlayerSpawn += OnPlayerSpawn;
     }
 
     void Start()
     {
         GameManager.instance.OnGameEnd += OnGameEnd;
-
-        SetUpPlayer(null);
-        SetUpPlayer(null);
-        SetUpPlayer(null);
     }
 
     private void OnDestroy()
     {
         GameManager.instance.OnGameEnd -= OnGameEnd;
+        PlayerSpawnManager.Instance.OnPlayerSpawn -= OnPlayerSpawn;
+    }
+
+    private void OnPlayerSpawn(CharacterController2D character, PlayerHealth playerHealth)
+    {
+        SetUpPlayer(character, playerHealth);
     }
 
     private void OnGameEnd(string playerName)
@@ -50,12 +54,12 @@ public class GameUI : MonoBehaviour
         winnerScreen.GetComponent<Animator>().SetTrigger("GameEnd");
     }
 
-    private void SetUpPlayer(CharacterController character)
+    private void SetUpPlayer(CharacterController2D character, PlayerHealth playerHealth)
     {
         PlayerUIStatus playerUIStatus = Instantiate(playerStatus, playerStatusHolder);
 
         playerUIStatuses.Add(playerUIStatus);
-        playerUIStatus.SetPlayer(character);
+        playerUIStatus.SetPlayer(character, playerHealth);
 
         if (playerUIStatuses.Count % 2 == 0)
         {

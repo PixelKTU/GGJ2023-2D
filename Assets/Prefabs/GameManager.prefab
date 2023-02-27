@@ -46,8 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf3acb9dd4d9fe4da3c9d42e7bdd8ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1Controller: {fileID: 0}
-  player2Controller: {fileID: 0}
 --- !u!114 &4258820870648776346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,8 +58,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b91a9a9d486316c4b81c1be40c6e3150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
-  audioSourceOneShot: {fileID: 1132614487589763002, guid: b926a768b40f2824da7e28a046acf13e, type: 3}
+  audioSource: {fileID: 1132614487589763002, guid: b926a768b40f2824da7e28a046acf13e, type: 3}
+  audioSourceOneShot: {fileID: 0}
 --- !u!114 &9093307999167982540
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 public class PlayerSpawnManager : MonoBehaviour
 {
     public static PlayerSpawnManager Instance;
+
+    public Action<CharacterController2D, PlayerHealth> OnPlayerSpawn;
 
     [SerializeField] GameObject playerPrefab;
     [SerializeField] int playerCount;
@@ -34,26 +37,27 @@ public class PlayerSpawnManager : MonoBehaviour
         GameObject obj = Instantiate(playerPrefab, position, Quaternion.identity);
         CharacterController2D playControl = obj.GetComponent<CharacterController2D>();
         playControl.OnCreatePlayer("Horizontal" + playerIndex, "Vertical" + playerIndex, playerSkins[playerIndex]);
+        OnPlayerSpawn?.Invoke(playControl, obj.GetComponent<PlayerHealth>());
     }
 
     void SpawnPlayers(int playCount)
     {
         List<Vector2> tempList = new List<Vector2>(spawnPositions);
-        
+
         for (int i = 0; i < playCount; i++)
         {
             Vector2 pos;
             if (tempList.Count == 0)
             {
-                pos = spawnPositions[Random.Range(0,spawnPositions.Count)];
+                pos = spawnPositions[UnityEngine.Random.Range(0, spawnPositions.Count)];
             }
             else
             {
-                int index = Random.Range(0, tempList.Count);
+                int index = UnityEngine.Random.Range(0, tempList.Count);
                 pos = tempList[index];
                 tempList.RemoveAt(index);
             }
-            SpawnOnePlayer(pos,i);
+            SpawnOnePlayer(pos, i);
         }
     }
 

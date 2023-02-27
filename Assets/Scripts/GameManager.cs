@@ -10,49 +10,54 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public bool gameEnded = false;
     public Action<string> OnGameEnd;//player name
-    public CharacterController2D player1Controller, player2Controller;
 
-    private int _winner;
+    private List<CharacterController2D> players = new List<CharacterController2D>();
 
     private void Awake()
     {
         instance = this;
+        PlayerSpawnManager.Instance.OnPlayerSpawn += OnPlayerSpawn;
     }
 
     private void Start()
     {
-        _winner = -1;
+        gameEnded = false;
     }
 
-    public void PlayerDied(int playerNumber)
+    private void OnDestroy()
     {
-        if (_winner == -1)
-        {
-            _winner = playerNumber;
-            string winner = "";
-            if (playerNumber == 1)
-            {
-                Debug.Log("player 2 won");
-                player2Controller.enabled = false;
-                player2Controller.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                player2Controller.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                winner = "Rat";
-            }
-            else if (playerNumber == 2)
-            {
-                Debug.Log("player 1 won");
-                player1Controller.enabled = false;
-                player1Controller.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                player1Controller.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                winner = "Cat";
-            }
-            else
-            {
-                Debug.Log("Wrong player number");
-            }
+        PlayerSpawnManager.Instance.OnPlayerSpawn -= OnPlayerSpawn;
+    }
 
-            OnGameEnd?.Invoke(winner);
+    private void OnPlayerSpawn(CharacterController2D characterController, PlayerHealth playerHealth)
+    {
+        players.Add(characterController);
+    }
+
+    public void PlayerDied(CharacterController2D player)
+    {
+        if (players.Contains(player))
+        {
+            players.Remove(player);
+        }
+
+        if (players.Count == 1)
+        {
+            CharacterController2D winner = players[0];
+
+            PlayerSkinData skinData = winner.GetPlayerSkinData();
+            winner.enabled = false;
+
+            Rigidbody2D rb = winner.GetComponent<Rigidbody2D>();
+            rb.velocity = Vector2.zero;
+            rb.bodyType = RigidbodyType2D.Static;
+
+            Debug.Log($"player {skinData.skinName} won");
+            OnGameEnd?.Invoke(skinData.skinName);
+            gameEnded = true;
         }
     }
+
 }

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CharacterController2D : MonoBehaviour
 {
-   // [SerializeField] KeyCode leftKey;
-   // [SerializeField] KeyCode rightKey;
-  //  [SerializeField] KeyCode jumpKey;
+    // [SerializeField] KeyCode leftKey;
+    // [SerializeField] KeyCode rightKey;
+    //  [SerializeField] KeyCode jumpKey;
 
     private string horizontalAxis;
     private string verticalAxis;
@@ -22,7 +22,7 @@ public class CharacterController2D : MonoBehaviour
     //private float jumpTimeCounter;
     private float startingSizeX;
     public float gravityScale = 5;
-    public AudioSource jump;
+    public AudioClip jump;
 
     [SerializeField] float jumpCooldownTimeInSeconds = 0.1f;
 
@@ -64,6 +64,11 @@ public class CharacterController2D : MonoBehaviour
         stunned = duration;
     }
 
+    public PlayerSkinData GetPlayerSkinData()
+    {
+        return playerSkinData;
+    }
+
     public void OnCreatePlayer(string horizontalAxis, string verticalAxis, PlayerSkinData playerSkinData)
     {
         this.horizontalAxis = horizontalAxis;
@@ -77,7 +82,7 @@ public class CharacterController2D : MonoBehaviour
         mainCollider = GetComponent<BoxCollider2D>();
 
         Bounds colliderBounds = mainCollider.bounds;
-        Vector3 colliderSize = new Vector3(mainCollider.size.x* 0.9f * Mathf.Abs(transform.localScale.x), 0.1f,1);
+        Vector3 colliderSize = new Vector3(mainCollider.size.x * 0.9f * Mathf.Abs(transform.localScale.x), 0.1f, 1);
         Vector3 groundCheckPos = colliderBounds.min + new Vector3(colliderBounds.size.x * 0.5f, colliderSize.y * 0.45f, 0);
 
         Gizmos.color = Color.red;
@@ -99,6 +104,8 @@ public class CharacterController2D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.instance.gameEnded) return;
+
         // coyote time and jump buffer time update
         if (coyoteTime > 0) coyoteTime -= Time.deltaTime;
         if (jumpBufferTime > 0) jumpBufferTime -= Time.deltaTime;
@@ -120,9 +127,9 @@ public class CharacterController2D : MonoBehaviour
             coyoteTime = CoyoteTimeInSeconds;
             isGrounded = true;
 
-            
+
         }
-   
+
         if (stunned > 0)
         {
             stunned = Mathf.Max(0, stunned - Time.deltaTime);
@@ -137,7 +144,7 @@ public class CharacterController2D : MonoBehaviour
         {
 
             float playerVelocity = 0;
-            
+
             if (horizontalVal < 0)
             {
                 transform.localScale = new Vector3(-startingSizeX, transform.localScale.y, transform.localScale.z); // flip sprite to the left
@@ -177,8 +184,8 @@ public class CharacterController2D : MonoBehaviour
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
                     //jumpTimeCounter = jumpTime;
-                    
-                    jump.Play();
+
+                    SoundManager.Instance.PlaySoundOneShot(jump);
                     isJumping = true;
 
                     jumpCooldown = jumpCooldownTimeInSeconds;

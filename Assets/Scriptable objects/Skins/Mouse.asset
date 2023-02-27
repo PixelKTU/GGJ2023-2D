@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6b7cd3c7a9db2247870612ea5ad1488, type: 3}
   m_Name: Mouse
   m_EditorClassIdentifier: 
+  skinName: Mouse
   playerHeadSprite: {fileID: 21300000, guid: f0af64d7a09fad74c895a56bd63c3e6e, type: 3}
   maxHealth: 3
   animations: {fileID: 22100000, guid: ed13628b17cd22a499340cc466079492, type: 2}

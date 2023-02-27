@@ -13,6 +13,9 @@ public class PlayerUIStatus : MonoBehaviour
 
     List<GameObject> playerHearts = new List<GameObject>();
 
+    private PlayerHealth playerHealth;
+    private CharacterController2D character;
+
     void Start()
     {
 
@@ -20,7 +23,7 @@ public class PlayerUIStatus : MonoBehaviour
 
     private void OnDestroy()
     {
-
+        playerHealth.playerDamagedAction -= OnPlayerTakeDamage;
     }
 
     private void OnPlayerTakeDamage()
@@ -54,12 +57,14 @@ public class PlayerUIStatus : MonoBehaviour
         playerImage.sprite = sprite;
     }
 
-    public void SetPlayer(CharacterController character)
+    public void SetPlayer(CharacterController2D character, PlayerHealth playerHealth)
     {
-        //character.SO getting all the info about the player
-        //character.ontakedamage += ontakedamage
+        this.playerHealth = playerHealth;
+        this.character = character;
+
+        this.playerHealth.playerDamagedAction += OnPlayerTakeDamage;
 
         SpawnHearts(3);
-        SetPlayerImage(testingPlayerImage);
+        SetPlayerImage(character.GetPlayerSkinData().playerHeadSprite);
     }
 }
