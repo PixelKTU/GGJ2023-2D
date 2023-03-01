@@ -24,12 +24,15 @@ public class PlayerSpawnManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        for (int i = 0; i < 4; i++) {
+            spawnPositions[i] = new List<Vector2>();
+        }
     }
 
-    private List<Vector2> spawnPositions = new List<Vector2>();
-    public void AddSpawnPosition(Vector2 pos)
+    private List<Vector2>[] spawnPositions = new List<Vector2>[4];
+    public void AddSpawnPosition(Vector2 pos, int playerThatSpawnsHere)
     {
-        spawnPositions.Add(pos);
+        spawnPositions[playerThatSpawnsHere].Add(pos);
     }
 
     void SpawnOnePlayer(Vector2 position, int playerIndex)
@@ -43,14 +46,15 @@ public class PlayerSpawnManager : MonoBehaviour
 
     void SpawnPlayers(int playCount)
     {
-        List<Vector2> tempList = new List<Vector2>(spawnPositions);
+        
 
         for (int i = 0; i < playCount; i++)
         {
+            List<Vector2> tempList = new List<Vector2>(spawnPositions[i]);
             Vector2 pos;
             if (tempList.Count == 0)
             {
-                pos = spawnPositions[UnityEngine.Random.Range(0, spawnPositions.Count)];
+                pos = spawnPositions[i][UnityEngine.Random.Range(0, spawnPositions[i].Count)];
             }
             else
             {

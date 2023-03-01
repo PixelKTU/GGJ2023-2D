@@ -5,6 +5,8 @@ using UnityEngine;
 public class SpawnPoint : MonoBehaviour
 {
     [SerializeField] Vector2 playerSize;
+    [Range(0,3)]
+    [SerializeField] int playerThatSpawnsHere;
 
     private void OnDrawGizmos()
     {
@@ -14,7 +16,7 @@ public class SpawnPoint : MonoBehaviour
 
     private void Awake()
     {
-        PlayerSpawnManager.Instance.AddSpawnPosition(transform.position);
+        PlayerSpawnManager.Instance.AddSpawnPosition(transform.position, playerThatSpawnsHere);
     }
 
 }

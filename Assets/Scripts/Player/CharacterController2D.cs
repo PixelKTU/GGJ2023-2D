@@ -39,6 +39,7 @@ public class CharacterController2D : MonoBehaviour
 
 
     private float stunned = 0;
+    private float flipped = 0; 
     [HideInInspector] public bool canMove = true;
 
     private float jumpBufferTime = 0;
@@ -62,6 +63,11 @@ public class CharacterController2D : MonoBehaviour
     public void Stun(float duration)
     {
         stunned = duration;
+    }
+
+    public void FlipControls(float duration)
+    {
+        flipped = duration;
     }
 
     public PlayerSkinData GetPlayerSkinData()
@@ -137,6 +143,13 @@ public class CharacterController2D : MonoBehaviour
 
         float verticalVal = Input.GetAxisRaw(verticalAxis);
         float horizontalVal = Input.GetAxisRaw(horizontalAxis);
+
+        if (flipped > 0)
+        {
+            flipped = Mathf.Max(0, flipped - Time.deltaTime);
+            horizontalVal *= -1;
+        }
+
         grabbing = verticalVal < 0;
 
         //atsakingas uz vaiksciojima

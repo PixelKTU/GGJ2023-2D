@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mushroom : ThrowableObject
+public class Beetroot : ThrowableObject
 {
     [SerializeField] int damage;
     [SerializeField] float stunSize;
     [SerializeField] float knowbackForce;
-    [SerializeField] float controlFlipDuration;
-
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         base.OnCollisionEnter2D(collision);
@@ -16,7 +14,6 @@ public class Mushroom : ThrowableObject
         {
             collision.gameObject.GetComponent<PlayerHealth>().RemoveHealth(damage);
             collision.gameObject.GetComponent<CharacterController2D>().Stun(stunSize);
-            collision.gameObject.GetComponent<CharacterController2D>().FlipControls(controlFlipDuration);
             Vector2 direction = (collision.gameObject.transform.position - gameObject.transform.position).normalized;
             collision.gameObject.GetComponent<Rigidbody2D>().velocity = direction * knowbackForce;
             onGround = true;
