@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf3acb9dd4d9fe4da3c9d42e7bdd8ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameEnded: 0
 --- !u!114 &4258820870648776346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,7 +74,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 4379923108720147238, guid: 0b388793873b46744856a2c2699122cf, type: 3}
-  playerCount: 2
+  playerCount: 4
   playerSkins:
   - {fileID: 11400000, guid: f8e63aee8b35e7240b5d72f4ae92fad2, type: 2}
   - {fileID: 11400000, guid: e99ec29e80c8eec4699b9605d54be9d3, type: 2}
+  - {fileID: 11400000, guid: fb2057adfd863ea48a799c9624e5a405, type: 2}
+  - {fileID: 11400000, guid: 64b87604d832c68469331a272d44b2f2, type: 2}
