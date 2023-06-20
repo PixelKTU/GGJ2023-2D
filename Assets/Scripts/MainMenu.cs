@@ -5,20 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] PlayerSelectManager selectManager;
+    [SerializeField] GameObject PlayerSelectUI;
     public void Play()
     {
-        SceneManager.LoadScene(GetRandomArena());
+        gameObject.SetActive(false);
+        PlayerSelectUI.SetActive(true);
+        selectManager.Clear();
+        selectManager.StartSelection();
     }
 
     public void Quit()
     {
         Debug.Log("quit");
         Application.Quit();
-    }
-
-    int GetRandomArena()
-    {
-        return Random.Range(1, 4);
     }
 
 }

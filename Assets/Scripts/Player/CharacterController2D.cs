@@ -185,7 +185,7 @@ public class CharacterController2D : MonoBehaviour
             stunned = Mathf.Max(0, stunned - Time.deltaTime);
         }
 
-        verticalVal = jumpVal - grabVal;
+        //verticalVal = jumpVal - grabVal;
 
         if (flipped > 0)
         {
@@ -193,8 +193,8 @@ public class CharacterController2D : MonoBehaviour
             horizontalVal *= -1;
         }
 
-        grabbing = verticalVal < 0;
-
+        grabbing = grabVal > 0;
+        verticalVal = jumpVal;
         //atsakingas uz vaiksciojima
         if (canMove && stunned == 0)
         {
@@ -204,12 +204,12 @@ public class CharacterController2D : MonoBehaviour
             if (horizontalVal < 0)
             {
                 transform.localScale = new Vector3(-startingSizeX, transform.localScale.y, transform.localScale.z); // flip sprite to the left
-                playerVelocity -= moveSpeed;
+                playerVelocity -= moveSpeed * Mathf.Abs(horizontalVal);
             }
             if (horizontalVal > 0)
             {
                 transform.localScale = new Vector3(startingSizeX, transform.localScale.y, transform.localScale.z); // flip sprite to the right
-                playerVelocity += moveSpeed;
+                playerVelocity += moveSpeed * Mathf.Abs(horizontalVal);
             }
 
             if (playerVelocity == 0)

@@ -23,6 +23,16 @@ public class InputManager : MonoBehaviour
     }
 
     static List<PlayerInput> playerInputs = new List<PlayerInput>();
+    static public bool[] keyboardOccupied = new bool[4];
+    public static int playerCount { get { return playerInputs.Count; } }
+    public static void Clear()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            keyboardOccupied[i] = false;
+        }
+        playerInputs.Clear();
+    }
 
     public static PlayerInput AddPlayerInput(InputType type, InputDevice inputDevice)
     {
@@ -42,9 +52,12 @@ public class InputManager : MonoBehaviour
             inputDeviceId = inputDevice.deviceId;
         }
 
+        if ((int)type < 4) keyboardOccupied[(int)type] = true;
+
         InputAction[] actions;
         if ((int)type == 0)
         {
+            
             actions = new InputAction[] { inputClass.ControlsKeyboard1.Horizontal, inputClass.ControlsKeyboard1.Jump, inputClass.ControlsKeyboard1.Pickup };
             inputClass.ControlsKeyboard1.Enable();
         }
@@ -82,7 +95,13 @@ public class InputManager : MonoBehaviour
         }
         if (index >= 0 && index < 4)
         {
-            return AddPlayerInput((InputType)index, null).inputActions;
+            for (int i = 0; i < 4; i++)
+            {
+                if (!keyboardOccupied[i])
+                {
+                    return AddPlayerInput((InputType)i, null).inputActions;
+                }
+            }
         }
         return null;
     }

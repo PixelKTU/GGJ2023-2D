@@ -70,6 +70,13 @@ public class PlayerSpawnManager : MonoBehaviour
 
     private void Start()
     {
-        SpawnPlayers(playerCount);
+        if (InputManager.playerCount == 0)
+        {
+            SpawnPlayers(playerCount);
+        }
+        else
+        {
+            SpawnPlayers(InputManager.playerCount);
+        }
     }
 }

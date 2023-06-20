@@ -472,6 +472,17 @@ public partial class @PlayerInputClass : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": """",
+                    ""id"": ""25bd7a43-85c6-4b75-b99d-edab62be70ec"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pickup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""Controller"",
                     ""id"": ""55642eba-abe5-459e-baac-1e77ded52507"",
                     ""path"": ""1DAxis"",
@@ -503,6 +514,17 @@ public partial class @PlayerInputClass : IInputActionCollection2, IDisposable
                     ""action"": ""Horizontal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1568e199-dd49-4c3a-b2b8-0cffb880b7d4"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Horizontal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }

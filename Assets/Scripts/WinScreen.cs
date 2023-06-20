@@ -27,9 +27,17 @@ public class WinScreen : MonoBehaviour
         return Random.Range(1, 4);
     }
 
-    private void Update()
+    private void Start()
     {
-        if (canNextMatch && Input.GetKeyDown(KeyCode.Space)) // Change when more inputs are added
+        for (int i = 0; i < InputManager.playerCount; i++)
+        {
+            InputManager.GetInputActions(i)[1].performed += TryChangeLevel;
+        }
+    }
+
+    public void TryChangeLevel(UnityEngine.InputSystem.InputAction.CallbackContext callback)
+    {
+        if (canNextMatch)
         {
             canNextMatch = false;
             NextMatch();
