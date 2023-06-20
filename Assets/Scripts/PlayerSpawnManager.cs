@@ -40,7 +40,9 @@ public class PlayerSpawnManager : MonoBehaviour
         GameObject obj = Instantiate(playerPrefab, position, Quaternion.identity);
         obj.GetComponent<SpriteRenderer>().sortingOrder = playerIndex;
         CharacterController2D playControl = obj.GetComponent<CharacterController2D>();
-        playControl.OnCreatePlayer("Horizontal" + playerIndex, "Vertical" + playerIndex, playerSkins[playerIndex]);
+        playControl.OnCreatePlayer(InputManager.GetInputActions(playerIndex), playerSkins[playerIndex]);
+
+
         OnPlayerSpawn?.Invoke(playControl, obj.GetComponent<PlayerHealth>());
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CharacterController2D : MonoBehaviour
 {
@@ -75,10 +76,22 @@ public class CharacterController2D : MonoBehaviour
         return playerSkinData;
     }
 
-    public void OnCreatePlayer(string horizontalAxis, string verticalAxis, PlayerSkinData playerSkinData)
+    public void OnCreatePlayer(InputAction[] inputActions, PlayerSkinData playerSkinData)
     {
-        this.horizontalAxis = horizontalAxis;
-        this.verticalAxis = verticalAxis;
+        inputActions[0].performed -= null;
+        inputActions[0].canceled -= null;
+        inputActions[1].performed -= null;
+        inputActions[1].canceled -= null;
+        inputActions[2].performed -= null;
+        inputActions[2].canceled -= null;
+
+        inputActions[0].performed += OnHorizontalPerformed;
+        inputActions[0].canceled += OnHorizontalPerformed;
+        inputActions[1].performed += OnJumpPerformed;
+        inputActions[1].canceled += OnJumpCanceled;
+        inputActions[2].performed += OnPickUpPerformed;
+        inputActions[2].canceled += OnPickUpCanceled;
+
         gameObject.GetComponent<Animator>().runtimeAnimatorController = playerSkinData.animations;
         this.playerSkinData = playerSkinData;
     }
@@ -107,6 +120,37 @@ public class CharacterController2D : MonoBehaviour
     public bool grabbing = false;
 
     float lastVerticalVal = 0;
+
+    float verticalVal = 0;
+    float horizontalVal = 0;
+
+    float jumpVal = 0;
+    float grabVal = 0;
+    public void OnHorizontalPerformed(InputAction.CallbackContext callback)
+    {
+        horizontalVal = callback.ReadValue<float>();
+    }
+    public void OnHorizontalCanceled(InputAction.CallbackContext callback)
+    {
+        horizontalVal = 0;
+    }
+    public void OnJumpPerformed(InputAction.CallbackContext callback)
+    {
+        jumpVal = callback.ReadValue<float>();
+    }
+    public void OnJumpCanceled(InputAction.CallbackContext callback)
+    {
+        jumpVal = 0;
+    }
+    public void OnPickUpPerformed(InputAction.CallbackContext callback)
+    {
+        grabVal = callback.ReadValue<float>();
+    }
+    public void OnPickUpCanceled(InputAction.CallbackContext callback)
+    {
+        grabVal = 0;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -141,8 +185,7 @@ public class CharacterController2D : MonoBehaviour
             stunned = Mathf.Max(0, stunned - Time.deltaTime);
         }
 
-        float verticalVal = Input.GetAxisRaw(verticalAxis);
-        float horizontalVal = Input.GetAxisRaw(horizontalAxis);
+        verticalVal = jumpVal - grabVal;
 
         if (flipped > 0)
         {
