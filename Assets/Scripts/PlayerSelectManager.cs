@@ -47,6 +47,7 @@ public class PlayerSelectManager : MonoBehaviour
             info.GetChild(0).gameObject.SetActive(true);
             info.GetChild(1).gameObject.SetActive(false);
         }
+        
     }
 
     public void BackButton()
@@ -70,7 +71,6 @@ public class PlayerSelectManager : MonoBehaviour
             textMeshPro.color = Color.red;
         }
     }
-
     void TryAddDevice(InputAction.CallbackContext callback)
     {
         if (cardNow == 4) return;
@@ -91,15 +91,16 @@ public class PlayerSelectManager : MonoBehaviour
         {
             InputManager.PlayerInput playerInput = InputManager.AddPlayerInput((InputManager.InputType)inputType, callback.control.device);
 
-            if (cardNow == 0) playerInput.inputActions[2].performed += callback => ToggleReadyMain(0);
-            else if (cardNow == 1) playerInput.inputActions[2].performed += callback => ToggleReadyMain(1);
-            else if (cardNow == 2) playerInput.inputActions[2].performed += callback => ToggleReadyMain(2);
-            else if (cardNow == 3) playerInput.inputActions[2].performed += callback => ToggleReadyMain(3);
+                if (cardNow == 0) playerInput.inputActions[2].performed += callback => ToggleReadyMain(0);
+                else if (cardNow == 1) playerInput.inputActions[2].performed += callback => ToggleReadyMain(1);
+                else if (cardNow == 2) playerInput.inputActions[2].performed += callback => ToggleReadyMain(2);
+                else if (cardNow == 3) playerInput.inputActions[2].performed += callback => ToggleReadyMain(3);
 
-            if (cardNow == 0) playerInput.inputActions[1].performed += callback => ToggleReadyMain(0);
-            else if (cardNow == 1) playerInput.inputActions[1].performed += callback => ToggleReadyMain(1);
-            else if (cardNow == 2) playerInput.inputActions[1].performed += callback => ToggleReadyMain(2);
-            else if (cardNow == 3) playerInput.inputActions[1].performed += callback => ToggleReadyMain(3);
+                if (cardNow == 0) playerInput.inputActions[1].performed += callback => ToggleReadyMain(0);
+                else if (cardNow == 1) playerInput.inputActions[1].performed += callback => ToggleReadyMain(1);
+                else if (cardNow == 2) playerInput.inputActions[1].performed += callback => ToggleReadyMain(2);
+                else if (cardNow == 3) playerInput.inputActions[1].performed += callback => ToggleReadyMain(3);
+
 
             panels[cardNow].GetChild(1).gameObject.SetActive(true);
             ChangeReadyVisuals(panels[cardNow].GetChild(1).GetComponent<TextMeshProUGUI>(), false);
@@ -120,6 +121,7 @@ public class PlayerSelectManager : MonoBehaviour
 
     void ToggleReadyMain(int index)
     {
+        
         if (canToggleReady)
         {
             readyBools[index] = !readyBools[index];

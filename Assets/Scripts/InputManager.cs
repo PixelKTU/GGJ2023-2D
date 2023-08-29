@@ -31,6 +31,11 @@ public class InputManager : MonoBehaviour
         {
             keyboardOccupied[i] = false;
         }
+        for (int i = 0; i < playerCount; i++)
+        {
+            playerInputs[i].input.Disable();
+            playerInputs[i].inputActions = null;
+        } 
         playerInputs.Clear();
     }
 
