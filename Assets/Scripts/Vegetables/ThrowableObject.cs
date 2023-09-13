@@ -74,7 +74,10 @@ public class ThrowableObject : MonoBehaviour
         if (thrown)
         {
             Rigidbody2D rigid = gameObject.GetComponent<Rigidbody2D>();
-            if (rigid.velocity.x * rigid.velocity.x + rigid.velocity.y * rigid.velocity.y <= minVelocityToStillHurt * minVelocityToStillHurt)
+
+            float mag = rigid.velocity.sqrMagnitude;
+            //Debug.Log(mag);
+            if (mag <= minVelocityToStillHurt * minVelocityToStillHurt)
             {
                 onGround = true;
             }

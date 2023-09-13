@@ -15,7 +15,7 @@ public class PlayerSelectManager : MonoBehaviour
     [SerializeField] Transform playerSelectUITransform;
     void Start()
     {
-        panels = new Transform[playerSelectUITransform.GetChild(0).childCount];
+        panels = new Transform[playerSelectUITransform.GetChild(0).GetChild(0).childCount];
 
         inputClass = new RegisterInputClass();
 
@@ -37,9 +37,9 @@ public class PlayerSelectManager : MonoBehaviour
             readyBools[i] = false;
         }
 
-        for (int i = 0; i < playerSelectUITransform.GetChild(0).childCount; i++)
+        for (int i = 0; i < playerSelectUITransform.GetChild(0).GetChild(0).childCount; i++)
         {
-            panels[i] = playerSelectUITransform.GetChild(0).GetChild(i);
+            panels[i] = playerSelectUITransform.GetChild(0).GetChild(0).GetChild(i);
             panels[i].GetChild(0).gameObject.SetActive(false);
             panels[i].GetChild(1).gameObject.SetActive(false);
 
