@@ -63,10 +63,15 @@ public class Potato : ThrowableObject
                 {
                     transform.parent.parent.GetComponent<PickUpItems>().ItemRemovedFromHands();
                 }
-                Vector2 dir = (collider.gameObject.transform.position - transform.position).normalized;                
-                collider.GetComponent<Rigidbody2D>().velocity = dir * maxExplosionForce;
-                collider.GetComponent<CharacterController2D>().Stun(stunDuration);
-                collider.GetComponent<PlayerHealth>().RemoveHealth(explosionDamage);
+                PlayerHealth hp = collider.GetComponent<PlayerHealth>();
+                hp.RemoveHealth(explosionDamage);
+                if (!hp.dead)
+                {
+                    Vector2 dir = (collider.gameObject.transform.position - transform.position).normalized;
+                    collider.GetComponent<Rigidbody2D>().velocity = dir * maxExplosionForce;
+                    collider.GetComponent<CharacterController2D>().Stun(stunDuration);
+                    
+                }
             }
         }
         GetComponent<Animator>().SetBool("Explode", true);

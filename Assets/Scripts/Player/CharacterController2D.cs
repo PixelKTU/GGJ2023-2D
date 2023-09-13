@@ -255,7 +255,7 @@ public class CharacterController2D : MonoBehaviour
             }
         }
 
-        if (enableBetterJump)
+        if (canMove && enableBetterJump)
         {
             if (rb.velocity.y < 0)
             {

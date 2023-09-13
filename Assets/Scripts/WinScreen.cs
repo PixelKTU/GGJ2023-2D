@@ -35,6 +35,14 @@ public class WinScreen : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        for (int i = 0; i < InputManager.playerCount; i++)
+        {
+            InputManager.GetInputActions(i)[1].performed -= TryChangeLevel;
+        }
+    }
+
     public void TryChangeLevel(UnityEngine.InputSystem.InputAction.CallbackContext callback)
     {
         if (canNextMatch)

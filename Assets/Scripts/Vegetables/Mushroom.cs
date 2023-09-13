@@ -12,11 +12,16 @@ public class Beetroot : ThrowableObject
         base.OnCollisionEnter2D(collision);
         if(!onGround && collision.gameObject.tag == "Player" && collision.gameObject != player)
         {
-            collision.gameObject.GetComponent<PlayerHealth>().RemoveHealth(damage);
-            collision.gameObject.GetComponent<CharacterController2D>().Stun(stunSize);
-            Vector2 direction = (collision.gameObject.transform.position - gameObject.transform.position).normalized;
-            collision.gameObject.GetComponent<Rigidbody2D>().velocity = direction * knowbackForce;
-            onGround = true;
+            PlayerHealth hp = collision.gameObject.GetComponent<PlayerHealth>();
+            hp.RemoveHealth(damage);
+            if (!hp.dead)
+            {
+                collision.gameObject.GetComponent<CharacterController2D>().Stun(stunSize);
+                Vector2 direction = (collision.gameObject.transform.position - gameObject.transform.position).normalized;
+                collision.gameObject.GetComponent<Rigidbody2D>().velocity = direction * knowbackForce;
+                onGround = true;
+                
+            }
         }
     }
 }
