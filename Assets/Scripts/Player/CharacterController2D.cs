@@ -39,7 +39,7 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] float maxVerticalSpeed;
 
 
-    private float stunned = 0;
+    [HideInInspector] public float stunned = 0;
     private float flipped = 0; 
     [HideInInspector] public bool canMove = true;
 

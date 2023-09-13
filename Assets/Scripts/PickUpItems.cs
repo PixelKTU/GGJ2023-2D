@@ -43,7 +43,7 @@ public class PickUpItems : MonoBehaviour
 
     private void Update()
     {
-        if (!health.dead && (controller2D.grabbing && !lastFrameGrabbing))
+        if (!health.dead && controller2D.stunned <= 0 && controller2D.grabbing && !lastFrameGrabbing)
         {
             if (_pickedObject == null)
             {
@@ -95,23 +95,26 @@ public class PickUpItems : MonoBehaviour
             if (_pullingTime >= PullingTime)
             {
                 // code when pulling sucessfull
-                GameObject prefab = _pickingGrass.GetComponent<PickableGrass>().containedObject;
-                _pickedObject = Instantiate(prefab, PickedObjectSpot.transform);
-                _pickedObject.layer = 9;
-                _pickedObject.GetComponent<Rigidbody2D>().simulated = false;
-
-                PickedObjectSpotCollider.enabled = true;
-                PickedObjectSpotCollider.size = _pickedObject.GetComponent<BoxCollider2D>().size;
-
-                _pickedObject.transform.localPosition = Vector3.zero;
-                _pickedObject.GetComponent<ThrowableObject>().Created(gameObject, prefab);
-                controller2D.canMove = true;
                 _pulling = false;
-                //Destroy(_pickingGrass);
-                _pickingGrass.GetComponent<PickableGrass>().HideLeafs();
-                if (animator != null)
+                if (!health.dead)
                 {
-                    animator.SetBool("isPulling", false);
+                    GameObject prefab = _pickingGrass.GetComponent<PickableGrass>().containedObject;
+                    _pickedObject = Instantiate(prefab, PickedObjectSpot.transform);
+                    _pickedObject.layer = 9;
+                    _pickedObject.GetComponent<Rigidbody2D>().simulated = false;
+
+                    PickedObjectSpotCollider.enabled = true;
+                    PickedObjectSpotCollider.size = _pickedObject.GetComponent<BoxCollider2D>().size;
+
+                    _pickedObject.transform.localPosition = Vector3.zero;
+                    _pickedObject.GetComponent<ThrowableObject>().Created(gameObject, prefab);
+                    controller2D.canMove = true;
+
+                    _pickingGrass.GetComponent<PickableGrass>().HideLeafs();
+                    if (animator != null)
+                    {
+                        animator.SetBool("isPulling", false);
+                    }
                 }
             }
         }

@@ -24,6 +24,7 @@ public class PlayerUIStatus : MonoBehaviour
     private void OnDestroy()
     {
         playerHealth.playerDamagedAction -= OnPlayerTakeDamage;
+        playerHealth.playerDiedAction -= RemoveAllHearts;
     }
 
     private void OnPlayerTakeDamage()
@@ -39,6 +40,17 @@ public class PlayerUIStatus : MonoBehaviour
             {
                 playerHearts[i].SetActive(false);
                 break;
+            }
+        }
+    }
+
+    private void RemoveAllHearts()
+    {
+        for (int i = 0; i < playerHearts.Count; i++)
+        {
+            if (playerHearts[i].activeInHierarchy)
+            {
+                playerHearts[i].SetActive(false);
             }
         }
     }
@@ -63,6 +75,7 @@ public class PlayerUIStatus : MonoBehaviour
         this.character = character;
 
         this.playerHealth.playerDamagedAction += OnPlayerTakeDamage;
+        this.playerHealth.playerDiedAction += RemoveAllHearts;
 
         SpawnHearts(3);
         SetPlayerImage(character.GetPlayerSkinData().playerHeadSprite);

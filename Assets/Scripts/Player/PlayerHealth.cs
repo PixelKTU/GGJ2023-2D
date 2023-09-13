@@ -15,6 +15,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] float ghostYSpeed;
 
     public Action playerDamagedAction;
+    public Action playerDiedAction;
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +54,7 @@ public class PlayerHealth : MonoBehaviour
         currHealth = 0;
         GameUI.Instance.UpdateHealthUI(playerNumber, currHealth);
         GameManager.instance.PlayerDied(GetComponent<CharacterController2D>());
-
+        playerDiedAction.Invoke();
         GetComponent<Animator>().SetBool("Death", true);
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         GetComponent<Collider2D>().enabled = false;
