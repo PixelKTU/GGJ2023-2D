@@ -43,7 +43,7 @@ public class PickUpItems : MonoBehaviour
 
     private void Update()
     {
-        if (!health.dead && (controller2D.grabbing && !lastFrameGrabbing))
+        if (!health.dead && controller2D.stunned <= 0 && controller2D.grabbing && !lastFrameGrabbing)
         {
             if (_pickedObject == null)
             {
